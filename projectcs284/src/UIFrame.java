@@ -3,7 +3,7 @@ import javax.swing.JFrame;
 
 public class UIFrame extends JFrame {
 
-	private choicePanel cp = new choicePanel();
+	private MainPanel cp = new MainPanel();
 	
 	public UIFrame() {
 		this.add(cp);
