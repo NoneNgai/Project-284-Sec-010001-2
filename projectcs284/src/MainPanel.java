@@ -10,6 +10,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -20,6 +21,7 @@ import java.awt.CardLayout;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.TableModel;
 import javax.swing.Icon;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
@@ -37,6 +39,8 @@ public class MainPanel extends JPanel {
 	private JPanel panelImport,panelFillScore;
 	private JTextField scoreField;
 	private JTextField IDtextField;
+	private JTable table;
+	private ReadWriteExcelFile r = new ReadWriteExcelFile();
 
 	public MainPanel() {
 		
@@ -65,7 +69,7 @@ public class MainPanel extends JPanel {
 		JLabel lblheader = new JLabel("Welcome  ");
 		panelHeader.add(lblheader,BorderLayout.EAST);
 		lblheader.setForeground(MyColor.GRAY.getColor());
-		lblheader.setFont(new Font("Palatino Linotype", Font.BOLD, 40));
+		lblheader.setFont(new Font("Segoe UI Light", Font.PLAIN, 40));
 
 		JSeparator separator = new JSeparator();
 		panelHeader.add(separator, BorderLayout.SOUTH);
@@ -286,6 +290,12 @@ public class MainPanel extends JPanel {
 		panelImport.setBackground(MyColor.GRAY.getColor());
 		panelImport.setLayout(null);
 		
+		JLabel lblUpdateStatus = new JLabel("didn't upload file yet.");
+		lblUpdateStatus.setForeground(MyColor.RED.getColor());
+		lblUpdateStatus.setFont(new Font("Segoe UI Light", Font.PLAIN,22));
+		lblUpdateStatus.setBounds(262, 149, 328, 41);
+		panelImport.add(lblUpdateStatus);
+		
 		JTextField fileTextField = new JTextField();
 		fileTextField.setForeground(MyColor.MIDNIGHTBLUE.getColor());
 		fileTextField.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(),2));
@@ -303,7 +313,7 @@ public class MainPanel extends JPanel {
 		btnAddfile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser fileopen = new JFileChooser();
-				FileFilter filter = new FileNameExtensionFilter("Text/CSV file","txt","csv");
+				FileFilter filter = new FileNameExtensionFilter("Excel Workbook (*.xlsx)","xlsx");
 				fileopen.addChoosableFileFilter(filter);
 				
 				int ret = fileopen.showDialog(null, "Import");
@@ -336,6 +346,25 @@ public class MainPanel extends JPanel {
 		btnOK.setBorderPainted(false);
 		btnOK.setBackground(new Color(22, 56, 81));
 		btnOK.setBounds(353, 286, 97, 41);
+		btnOK.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (!fileTextField.getText().trim().isEmpty()) {
+						r.readXlsxFile(fileTextField.getText());
+						if (r.UpdateFileStatus()) {
+							lblUpdateStatus.setForeground(MyColor.GREEN.getColor());
+							lblUpdateStatus.setText("DONE");
+						}
+					}
+					else {
+						lblUpdateStatus.setForeground(MyColor.RED.getColor());
+						lblUpdateStatus.setText("Please select file first");
+					}
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnOK.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent event) {
 		        highlightButtons(event.getLocationOnScreen(), btnOK);
@@ -354,6 +383,11 @@ public class MainPanel extends JPanel {
 		btnCancel.setBorderPainted(false);
 		btnCancel.setBackground(new Color(22, 56, 81));
 		btnCancel.setBounds(460, 286, 130, 41);
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fileTextField.setText("");
+			}
+		});
 		btnCancel.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent event) {
 		        highlightButtons(event.getLocationOnScreen(), btnCancel);
@@ -367,39 +401,47 @@ public class MainPanel extends JPanel {
 		
 		JLabel lblStatus = new JLabel("File Status : ");
 		lblStatus.setForeground(MyColor.MIDNIGHTBLUE.getColor());
-		lblStatus.setFont(new Font("Segoe UI Semibold", Font.BOLD, 22));
+		lblStatus.setFont(new Font("Segoe UI Light", Font.BOLD, 22));
 		lblStatus.setBounds(138, 149, 149, 41);
 		panelImport.add(lblStatus);
-		
-		JLabel lblUpdateStatus = new JLabel("didn't upload file yet.");
-		lblUpdateStatus.setForeground(MyColor.RED.getColor());
-		lblUpdateStatus.setFont(new Font("Segoe UI Semibold", Font.PLAIN,22));
-		lblUpdateStatus.setBounds(262, 149, 328, 41);
-		panelImport.add(lblUpdateStatus);
 
 	}
 	
 	public void fillScorePanel() {
+
 		panelFillScore = new JPanel();
 		panelFillScore.setBackground(MyColor.GRAY.getColor());
 		panelFillScore.setLayout(null);
 		
 		JLabel lblSubjectTitle = new JLabel("Subject :");
 		lblSubjectTitle.setForeground(MyColor.MIDNIGHTBLUE.getColor());
-		lblSubjectTitle.setFont(new Font("Segoe UI Semibold", Font.BOLD, 25));
-		lblSubjectTitle.setBounds(266, 30, 125, 30);
+		lblSubjectTitle.setFont(new Font("Segoe UI Light", Font.BOLD, 25));
+		lblSubjectTitle.setBounds(286, 30, 125, 30);
 		panelFillScore.add(lblSubjectTitle);
 		
 		JLabel lblSubjectname = new JLabel("CS284");
 		lblSubjectname.setForeground(MyColor.RED.getColor());
-		lblSubjectname.setFont(new Font("Segoe UI Semibold", Font.BOLD, 25));
-		lblSubjectname.setBounds(374, 30, 74, 30);
+		lblSubjectname.setFont(new Font("Segoe UI Light", Font.PLAIN, 25));
+		lblSubjectname.setBounds(394, 30, 74, 30);
 		panelFillScore.add(lblSubjectname);
 		
 		String[] item = {"","Quiz 1","Quiz 2"};
 		JComboBox comboBox = new JComboBox(item);
 		comboBox.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		comboBox.setBounds(266, 82, 222, 30);
+		comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String head[] = {"Student ID","Name","Score"};
+				
+				table = new JTable(r.getTable(),head);
+				panelFillScore.add(table);
+				
+				JScrollPane scrollPane = new JScrollPane(table);
+				scrollPane.setBounds(175, 192, 406, 310);
+				scrollPane.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(), 2));
+				panelFillScore.add(scrollPane);
+			}
+		});
 		panelFillScore.add(comboBox);
 		
 		JButton btnCancel = new JButton("Cancel");
@@ -438,17 +480,6 @@ public class MainPanel extends JPanel {
 		});
 		panelFillScore.add(btnOK);
 		
-		String id[][] = {};
-		String head[] = {"ID","Score"};
-		
-		JTable table = new JTable(id,head);
-		panelFillScore.add(table);
-		
-		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setBounds(175, 192, 406, 310);
-		scrollPane.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(), 2));
-		panelFillScore.add(scrollPane);
-		
 		scoreField = new JTextField();
 		scoreField.setBounds(415, 135, 120, 35);
 		panelFillScore.add(scoreField);
@@ -457,7 +488,7 @@ public class MainPanel extends JPanel {
 		scoreField.setHorizontalAlignment(JTextField.CENTER);
 		scoreField.setFont(new Font("Segoe UI Semibold",Font.BOLD,14));
 		scoreField.setEnabled(false);
-		scoreField.setText("Add score");
+		scoreField.setText("Add score...");
 		scoreField.setBorder(BorderFactory.createEmptyBorder());
 		scoreField.setColumns(10);
 		scoreField.addFocusListener(new FocusListener() {
@@ -469,7 +500,9 @@ public class MainPanel extends JPanel {
 			public void focusLost(FocusEvent e) {
 				scoreField.setBackground(MyColor.MIDNIGHTBLUE.getColor());
 				scoreField.setForeground(MyColor.GRAY.getColor());
-				//scoreField.setText("Add Score");
+				if (scoreField.getText().trim().isEmpty()) {
+					scoreField.setText("Add Score...");
+				}
 			}
 		});
 		
@@ -499,12 +532,16 @@ public class MainPanel extends JPanel {
 			public void focusGained(FocusEvent e) {
 				IDtextField.setBackground(MyColor.CORAL.getColor());
 				IDtextField.setForeground(MyColor.MIDNIGHTBLUE.getColor());
-				IDtextField.setText("");
+				if (IDtextField.getText().equals("Search by ID")) {
+					IDtextField.setText("");
+				}
 			}
 			public void focusLost(FocusEvent e) {
 				IDtextField.setBackground(MyColor.MIDNIGHTBLUE.getColor());
 				IDtextField.setForeground(MyColor.GRAY.getColor());
-				//IDtextField.setText("Search by ID");
+				if (IDtextField.getText().trim().isEmpty()) {
+					IDtextField.setText("Search by ID");
+				}
 			}
 		});
 		IDtextField.setBorder(BorderFactory.createEmptyBorder());
