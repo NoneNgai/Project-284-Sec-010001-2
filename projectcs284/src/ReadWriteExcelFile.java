@@ -48,7 +48,7 @@ public class ReadWriteExcelFile {
 							list.addID(cell.getNumericCellValue());
 						}*/
 						switch (countcol) {
-							case 2 : list.addID(cell.getNumericCellValue()); break;
+							case 2 : list.addID((long) cell.getNumericCellValue()); break;
 							case 3 : list.addName(cell.getStringCellValue()); break;
 						}
 					}

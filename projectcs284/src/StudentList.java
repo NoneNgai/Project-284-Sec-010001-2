@@ -2,7 +2,7 @@
 import java.util.ArrayList;
 
 public class StudentList {
-	private ArrayList<Double> id;
+	private ArrayList<Long> id;
 	private ArrayList<String> name;
 	private ArrayList<String> email;
 	private ExamResult e;
@@ -15,17 +15,17 @@ public class StudentList {
 
 	}
 
-	public ArrayList<Double> getIDList() {
+	public ArrayList<Long> getIDList() {
 		return id;
 	}
 
-	public void add(int index, Double id, String name, String email) {
+	public void add(int index, long id, String name, String email) {
 		this.id.add(index, id);
 		this.email.add(index, email);
 	}
 
 
-	public void addID(double id) {
+	public void addID(long id) {
 		this.id.add(id);
 	}
 	
@@ -54,9 +54,7 @@ public class StudentList {
 		
 		for (int i=0;i<id.size()-1;i++) {
 			for (int j=0;j<3;j++) {
-				double x = id.get(i);
-				long v = (long) x;
-				table[i][0] = Long.toString(v);
+				table[i][0] = Long.toString(id.get(i));
 				table[i][1] = name.get(i);
 				table[i][2] = "0";
 			}
