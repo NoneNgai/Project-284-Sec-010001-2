@@ -431,15 +431,17 @@ public class MainPanel extends JPanel {
 		comboBox.setBounds(266, 82, 222, 30);
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String head[] = {"Student ID","Name","Score"};
-				
-				table = new JTable(r.getTable(),head);
-				panelFillScore.add(table);
-				
-				JScrollPane scrollPane = new JScrollPane(table);
-				scrollPane.setBounds(175, 192, 406, 310);
-				scrollPane.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(), 2));
-				panelFillScore.add(scrollPane);
+				if (comboBox.getSelectedItem().equals("Quiz 1")) {
+					String head[] = {"Student ID","Name","Score"};
+					
+					table = new JTable(r.getTable(),head);
+					panelFillScore.add(table);
+					
+					JScrollPane scrollPane = new JScrollPane(table);
+					scrollPane.setBounds(175, 192, 406, 310);
+					scrollPane.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(), 2));
+					panelFillScore.add(scrollPane);
+				}
 			}
 		});
 		panelFillScore.add(comboBox);
