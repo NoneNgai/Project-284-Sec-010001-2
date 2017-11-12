@@ -19,11 +19,12 @@ public class StudentList {
 		return id;
 	}
 
-	public void add(int index, double id, String name, String email) {
+	public void add(int index, Double id, String name, String email) {
 		this.id.add(index, id);
 		this.email.add(index, email);
 	}
-	
+
+
 	public void addID(double id) {
 		this.id.add(id);
 	}
@@ -53,7 +54,9 @@ public class StudentList {
 		
 		for (int i=0;i<id.size()-1;i++) {
 			for (int j=0;j<3;j++) {
-				table[i][0] = Double.toString(id.get(i));
+				double x = id.get(i);
+				long v = (long) x;
+				table[i][0] = Long.toString(v);
 				table[i][1] = name.get(i);
 				table[i][2] = "0";
 			}
@@ -61,5 +64,6 @@ public class StudentList {
 		return table;
 		
 	}
+
 	
 }
