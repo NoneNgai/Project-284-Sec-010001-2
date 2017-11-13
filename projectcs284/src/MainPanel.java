@@ -314,7 +314,9 @@ public class MainPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser fileopen = new JFileChooser();
 				FileFilter filter = new FileNameExtensionFilter("Excel Workbook (*.xlsx)","xlsx");
+				FileFilter filter2 = new FileNameExtensionFilter("Excel 97-2009 Workbook (*.xls)","xls");
 				fileopen.addChoosableFileFilter(filter);
+				fileopen.addChoosableFileFilter(filter2);
 				
 				int ret = fileopen.showDialog(null, "Import");
 				
@@ -350,7 +352,7 @@ public class MainPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (!fileTextField.getText().trim().isEmpty()) {
-						r.readXlsxFile(fileTextField.getText());
+						r.readFile(fileTextField.getText());
 						if (r.UpdateFileStatus()) {
 							lblUpdateStatus.setForeground(MyColor.GREEN.getColor());
 							lblUpdateStatus.setText("DONE");
@@ -431,7 +433,7 @@ public class MainPanel extends JPanel {
 		comboBox.setBounds(266, 82, 222, 30);
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (comboBox.getSelectedItem().equals("Quiz 1")) {
+				//if (comboBox.getSelectedItem().equals("Quiz 1")) {
 					String head[] = {"Student ID","Name","Score"};
 					
 					table = new JTable(r.getTable(),head);
@@ -441,7 +443,7 @@ public class MainPanel extends JPanel {
 					scrollPane.setBounds(175, 192, 406, 310);
 					scrollPane.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(), 2));
 					panelFillScore.add(scrollPane);
-				}
+			//	}
 			}
 		});
 		panelFillScore.add(comboBox);

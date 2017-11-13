@@ -52,7 +52,7 @@ public class StudentList {
 	public String[][] getTable() {
 		String[][] table = new String[id.size()][3];
 		
-		for (int i=0;i<id.size()-1;i++) {
+		for (int i=0;i<id.size();i++) {
 			for (int j=0;j<3;j++) {
 				table[i][0] = Long.toString(id.get(i));
 				table[i][1] = name.get(i);
