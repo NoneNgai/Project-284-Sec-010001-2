@@ -1,5 +1,15 @@
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+
+import javax.swing.JFileChooser;
+
+
 
 public class StudentList {
 	private ArrayList<Long> id;
@@ -29,8 +39,8 @@ public class StudentList {
 		return id.size();
 
 	}
-	public Long getId(int index)
-	{
+
+	public Long getId(int index) {
 		return id.get(index);
 	}
 
@@ -59,7 +69,7 @@ public class StudentList {
 
 		for (int i = 0; i < id.size(); i++) {
 			for (int j = 0; j < 3; j++) {
-				table[i][0] = ""+id.get(i);
+				table[i][0] = "" + id.get(i);
 				table[i][1] = name.get(i);
 				table[i][2] = "0";
 			}

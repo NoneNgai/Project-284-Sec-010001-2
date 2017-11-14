@@ -12,6 +12,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 import javax.swing.BorderFactory;
@@ -323,7 +324,6 @@ public class MainPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				table = null;
 				comboBox.setSelectedItem(0);
-			
 
 				JFileChooser fileopen = new JFileChooser();
 				FileFilter filter = new FileNameExtensionFilter("Excel Workbook (*.xlsx)", "xlsx");
@@ -489,16 +489,41 @@ public class MainPanel extends JPanel {
 		btnOK.setBorderPainted(false);
 		btnOK.setBackground(new Color(22, 56, 81));
 		btnOK.setBounds(473, 526, 105, 40);
-		btnOK.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent event) {
-				highlightButtons(event.getLocationOnScreen(), btnOK);
-
+		btnOK.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				btnOK.setBackground(MyColor.MIDNIGHTBLUE.getColor());
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				
+				highlightButtons(e.getLocationOnScreen(), btnOK);
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				exam = new ExamResult();
 				std = new StudentList();
 
 				for (int i = 0; i < table.getRowCount(); i++) {
 					exam.add("" + table.getValueAt(i, 2));
 					std.addID(Long.valueOf((String) table.getValueAt(i, 0)));
+					
 				}
 
 				for (int i = 0; i < exam.size(); i++) {
@@ -506,13 +531,19 @@ public class MainPanel extends JPanel {
 					System.out.println(std.getId(i) + "     " + exam.getScore(i));
 
 				}
+				
+			/*	try {
+					//exam.saveScore(std,exam);
+				} catch (NumberFormatException | IOException ioe) {
+					// TODO Auto-generated catch block
+					ioe.printStackTrace();
+				}*/
 
+				
 			}
+		}); 
+			
 
-			public void mouseExited(MouseEvent event) {
-				btnOK.setBackground(MyColor.MIDNIGHTBLUE.getColor());
-			}
-		});
 		panelFillScore.add(btnOK);
 
 		scoreField = new JTextField();
@@ -527,13 +558,14 @@ public class MainPanel extends JPanel {
 		scoreField.setBorder(BorderFactory.createEmptyBorder());
 		scoreField.setColumns(10);
 		scoreField.addFocusListener(new FocusListener() {
-			public void focusGained(FocusEvent e) {
-				scoreField.setBackground(MyColor.CORAL.getColor());
-				scoreField.setForeground(MyColor.MIDNIGHTBLUE.getColor());
-				scoreField.setText("");
-			}
 
-			public void focusLost(FocusEvent e) {
+	public void focusGained(FocusEvent e) {
+		scoreField.setBackground(MyColor.CORAL.getColor());
+		scoreField.setForeground(MyColor.MIDNIGHTBLUE.getColor());
+		scoreField.setText("");
+	}
+
+	public void focusLost(FocusEvent e) {
 				scoreField.setBackground(MyColor.MIDNIGHTBLUE.getColor());
 				scoreField.setForeground(MyColor.GRAY.getColor());
 				if (scoreField.getText().trim().isEmpty()) {
