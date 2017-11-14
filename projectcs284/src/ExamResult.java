@@ -6,11 +6,12 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import javax.swing.JFileChooser;
 
 public class ExamResult {
-	private ArrayList<Integer> score;
+	private ArrayList<String > score;
 	private File file;
 	private StudentList s;
 
@@ -19,12 +20,18 @@ public class ExamResult {
 		s = new StudentList();
 	}
 
-	public void add(int score) {
-		this.score.add(score);
+	public void add(String s) {
+
+		this.score.add(s);
+
 	}
 
-	public int getScore(int index) {
+	public String getScore(int  index) {
 		return score.get(index);
+	}
+
+	public int size() {
+		return score.size();
 	}
 
 	public void saveScore() throws IOException, FileNotFoundException, NumberFormatException {
@@ -47,7 +54,9 @@ public class ExamResult {
 		}
 
 	}
+
 	public static void main(String[] args) {
-		
+		ExamResult e = new ExamResult();
+
 	}
 }

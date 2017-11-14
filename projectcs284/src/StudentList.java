@@ -19,16 +19,21 @@ public class StudentList {
 		return id;
 	}
 
-	public void add(int index, long id, String name, String email) {
-		this.id.add(index, id);
-		this.email.add(index, email);
-	}
-
-
 	public void addID(long id) {
+
 		this.id.add(id);
+
 	}
-	
+
+	public int size() {
+		return id.size();
+
+	}
+	public Long getId(int index)
+	{
+		return id.get(index);
+	}
+
 	public void addName(String name) {
 		this.name.add(name);
 	}
@@ -42,26 +47,25 @@ public class StudentList {
 		}
 		return true;
 	}
-	
+
 	public void clearList() {
 		id.clear();
 		name.clear();
 		email.clear();
 	}
-	
+
 	public String[][] getTable() {
 		String[][] table = new String[id.size()][3];
-		
-		for (int i=0;i<id.size();i++) {
-			for (int j=0;j<3;j++) {
-				table[i][0] = Long.toString(id.get(i));
+
+		for (int i = 0; i < id.size(); i++) {
+			for (int j = 0; j < 3; j++) {
+				table[i][0] = ""+id.get(i);
 				table[i][1] = name.get(i);
 				table[i][2] = "0";
 			}
 		}
 		return table;
-		
+
 	}
 
-	
 }
