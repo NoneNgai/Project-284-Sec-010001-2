@@ -490,31 +490,31 @@ public class MainPanel extends JPanel {
 		btnOK.setBackground(new Color(22, 56, 81));
 		btnOK.setBounds(473, 526, 105, 40);
 		btnOK.addMouseListener(new MouseListener() {
-			
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				btnOK.setBackground(MyColor.MIDNIGHTBLUE.getColor());
-				
+
 			}
-			
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				
+
 				highlightButtons(e.getLocationOnScreen(), btnOK);
 			}
-			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				exam = new ExamResult();
@@ -523,7 +523,7 @@ public class MainPanel extends JPanel {
 				for (int i = 0; i < table.getRowCount(); i++) {
 					exam.add("" + table.getValueAt(i, 2));
 					std.addID(Long.valueOf((String) table.getValueAt(i, 0)));
-					
+
 				}
 
 				for (int i = 0; i < exam.size(); i++) {
@@ -531,18 +531,9 @@ public class MainPanel extends JPanel {
 					System.out.println(std.getId(i) + "     " + exam.getScore(i));
 
 				}
-				
-			/*	try {
-					//exam.saveScore(std,exam);
-				} catch (NumberFormatException | IOException ioe) {
-					// TODO Auto-generated catch block
-					ioe.printStackTrace();
-				}*/
 
-				
 			}
-		}); 
-			
+		});
 
 		panelFillScore.add(btnOK);
 
@@ -559,13 +550,13 @@ public class MainPanel extends JPanel {
 		scoreField.setColumns(10);
 		scoreField.addFocusListener(new FocusListener() {
 
-	public void focusGained(FocusEvent e) {
-		scoreField.setBackground(MyColor.CORAL.getColor());
-		scoreField.setForeground(MyColor.MIDNIGHTBLUE.getColor());
-		scoreField.setText("");
-	}
+			public void focusGained(FocusEvent e) {
+				scoreField.setBackground(MyColor.CORAL.getColor());
+				scoreField.setForeground(MyColor.MIDNIGHTBLUE.getColor());
+				scoreField.setText("");
+			}
 
-	public void focusLost(FocusEvent e) {
+			public void focusLost(FocusEvent e) {
 				scoreField.setBackground(MyColor.MIDNIGHTBLUE.getColor());
 				scoreField.setForeground(MyColor.GRAY.getColor());
 				if (scoreField.getText().trim().isEmpty()) {
