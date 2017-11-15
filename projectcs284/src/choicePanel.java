@@ -154,6 +154,7 @@ public class choicePanel extends JPanel {
 		btn.setOpaque(false);
 		btn.setForeground(MyColor.CORAL.getColor());
 		btn.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		System.out.println("Maw Meow");
 	}
 
 	public void highlightButtons(Point cursor, JButton button) {
