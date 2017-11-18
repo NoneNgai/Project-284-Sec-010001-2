@@ -197,7 +197,7 @@ public class MainPanel extends JPanel {
 		btnFillScore.setBorderPainted(false);
 		btnFillScore.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		btnFillScore.setBounds(0, 277, 249, 43);
-		btnFillScore.setEnabled(false);
+		//btnFillScore.setEnabled(false);
 		btnFillScore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				rightSidePanel.removeAll();
@@ -537,50 +537,6 @@ public class MainPanel extends JPanel {
 
 		panelFillScore.add(btnOK);
 
-		scoreField = new JTextField();
-		scoreField.setBounds(415, 135, 120, 35);
-		panelFillScore.add(scoreField);
-		scoreField.setBackground(MyColor.MIDNIGHTBLUE.getColor());
-		scoreField.setForeground(MyColor.GRAY.getColor());
-		scoreField.setHorizontalAlignment(JTextField.CENTER);
-		scoreField.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
-		scoreField.setEnabled(false);
-		scoreField.setText("Add score...");
-		scoreField.setBorder(BorderFactory.createEmptyBorder());
-		scoreField.setColumns(10);
-		scoreField.addFocusListener(new FocusListener() {
-
-			public void focusGained(FocusEvent e) {
-				scoreField.setBackground(MyColor.CORAL.getColor());
-				scoreField.setForeground(MyColor.MIDNIGHTBLUE.getColor());
-				scoreField.setText("");
-			}
-
-			public void focusLost(FocusEvent e) {
-				scoreField.setBackground(MyColor.MIDNIGHTBLUE.getColor());
-				scoreField.setForeground(MyColor.GRAY.getColor());
-				if (scoreField.getText().trim().isEmpty()) {
-					scoreField.setText("Add Score...");
-				}
-			}
-		});
-
-		JButton btnAdd = new JButton(new ImageIcon("resource//image//add.png"));
-		btnAdd.setBackground(MyColor.MIDNIGHTBLUE.getColor());
-		btnAdd.setBorderPainted(false);
-		btnAdd.setFocusable(false);
-		btnAdd.setBounds(534, 135, 47, 35);
-		btnAdd.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent event) {
-				highlightButtons(event.getLocationOnScreen(), btnAdd);
-			}
-
-			public void mouseExited(MouseEvent event) {
-				btnAdd.setBackground(MyColor.MIDNIGHTBLUE.getColor());
-			}
-		});
-		panelFillScore.add(btnAdd);
-
 		IDtextField = new JTextField();
 		IDtextField.setHorizontalAlignment(SwingConstants.CENTER);
 		IDtextField.setForeground(new Color(219, 227, 229));
@@ -607,14 +563,14 @@ public class MainPanel extends JPanel {
 		});
 		IDtextField.setBorder(BorderFactory.createEmptyBorder());
 		IDtextField.setBackground(new Color(25, 56, 81));
-		IDtextField.setBounds(175, 135, 156, 35);
+		IDtextField.setBounds(277, 135, 156, 35);
 		panelFillScore.add(IDtextField);
 
 		JButton btnID = new JButton(new ImageIcon("resource//image//search.png"));
 		btnID.setFocusable(false);
 		btnID.setBorderPainted(false);
 		btnID.setBackground(new Color(25, 56, 81));
-		btnID.setBounds(331, 135, 47, 35);
+		btnID.setBounds(433, 135, 47, 35);
 		btnID.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent event) {
 				highlightButtons(event.getLocationOnScreen(), btnID);

@@ -1,5 +1,3 @@
-/U1Test.class
-/U2Test.class
 /ExamResult.class
 /FileException.class
 /FileFormatException.class
@@ -32,4 +30,12 @@
 /PositiveException.class
 /ReadWriteExcelFile.class
 /StudentList.class
+/U1Test.class
+/U2Test.class
 /UIFrame.class
+/choicePanel$1.class
+/choicePanel$2.class
+/choicePanel$3.class
+/choicePanel$4.class
+/choicePanel$5.class
+/choicePanel.class
