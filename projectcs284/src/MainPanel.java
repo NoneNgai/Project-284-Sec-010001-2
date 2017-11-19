@@ -39,7 +39,8 @@ public class MainPanel extends JPanel {
 	private final JPanel sidepane = new JPanel();
 	private JPanel bgPanelFillScore = new JPanel();
 	private JPanel bgPanelImport = new JPanel();
-	private JPanel panelImport, panelFillScore;
+	private JPanel bgPanelSubject = new JPanel();
+	private JPanel panelImport, panelFillScore,Subjectpanel;
 	private JTextField scoreField;
 	private JTextField IDtextField;
 	private JTable table;
@@ -140,6 +141,7 @@ public class MainPanel extends JPanel {
 
 		importPanel();
 		fillScorePanel();
+		subjectPanel();
 
 		/////// Button on Sidepane
 
@@ -178,6 +180,17 @@ public class MainPanel extends JPanel {
 		btnSubject.setFocusable(false);
 		btnSubject.setContentAreaFilled(false);
 		btnSubject.setBorderPainted(false);
+		btnSubject.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				rightSidePanel.removeAll();
+				rightSidePanel.add(Subjectpanel);
+				rightSidePanel.repaint();
+				rightSidePanel.revalidate();
+				lblheader.setText("Subject  ");
+				setBgSidePanel(bgPanelSubject,227);
+				removeBgOther(bgPanelSubject);
+			}
+		});
 		btnSubject.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent event) {
 				highlightButtons(event.getLocationOnScreen(), btnSubject);
@@ -197,7 +210,6 @@ public class MainPanel extends JPanel {
 		btnFillScore.setBorderPainted(false);
 		btnFillScore.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		btnFillScore.setBounds(0, 277, 249, 43);
-		//btnFillScore.setEnabled(false);
 		btnFillScore.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				rightSidePanel.removeAll();
@@ -282,11 +294,19 @@ public class MainPanel extends JPanel {
 	public void removeBgOther(JPanel panel) {
 		if (panel.equals(bgPanelFillScore)) {
 			sidepane.remove(bgPanelImport);
+			sidepane.remove(bgPanelSubject);
 			sidepane.repaint();
 			sidepane.revalidate();
 		}
 		if (panel.equals(bgPanelImport)) {
 			sidepane.remove(bgPanelFillScore);
+			sidepane.remove(bgPanelSubject);
+			sidepane.repaint();
+			sidepane.revalidate();
+		}
+		if (panel.equals(bgPanelSubject)) {
+			sidepane.remove(bgPanelFillScore);
+			sidepane.remove(bgPanelImport);
 			sidepane.repaint();
 			sidepane.revalidate();
 		}
@@ -581,5 +601,212 @@ public class MainPanel extends JPanel {
 			}
 		});
 		panelFillScore.add(btnID);
+	}
+	
+	public void subjectPanel() {
+		Subjectpanel = new JPanel();
+		Subjectpanel.setBackground(MyColor.GRAY.getColor());
+		Subjectpanel.setLayout(null);
+		
+		JPanel panelSubjectSidepane;
+		JPanel bgSubject = new JPanel();
+		JPanel bgCriteria = new JPanel();
+		
+		panelSubjectSidepane = new JPanel();
+		panelSubjectSidepane.setBounds(3, 11, 740, 48);
+		panelSubjectSidepane.setBackground(MyColor.MIDNIGHTBLUE.getColor());
+		Subjectpanel.add(panelSubjectSidepane);
+		panelSubjectSidepane.setLayout(null);
+		
+		JPanel SubjectdownPanel = new JPanel();
+		SubjectdownPanel.setBounds(10, 71, 733, 489);
+		SubjectdownPanel.setLayout(null);
+		Subjectpanel.add(SubjectdownPanel);
+
+		JPanel panelSubjectInfo = new JPanel();
+		panelSubjectInfo.setBounds(0, 0, 733, 489);
+		SubjectdownPanel.add(panelSubjectInfo);
+		panelSubjectInfo.setLayout(null);
+		panelSubjectInfo.setBackground(MyColor.GRAY.getColor());
+		
+		JPanel panelCriteria = new JPanel();
+		panelCriteria.setBounds(0, 0, 733, 489);
+		panelCriteria.setBackground(MyColor.GRAY.getColor());
+		SubjectdownPanel.add(panelCriteria);
+		panelCriteria.setLayout(null);
+		
+		JLabel lblFill = new JLabel("Fill full score and criteria");
+		lblFill.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 35));
+		lblFill.setBounds(37, 21, 384, 63);
+		panelCriteria.add(lblFill);
+		
+		String[][] id = {};
+		String head[] = { "Name", "Full Score", "Criteria (%)" };
+
+		JTable table = new JTable(id, head);
+		
+		JScrollPane scrollPane = new JScrollPane(table);
+		scrollPane.setBounds(147, 95, 432, 365);
+		scrollPane.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(), 2));
+		panelCriteria.add(scrollPane);
+		
+		JButton btnSubjectinfo = new JButton("Subject");
+		btnSubjectinfo.setBounds(0, 0, 168, 48);
+		panelSubjectSidepane.add(btnSubjectinfo);
+		btnSubjectinfo.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 22));
+		btnSubjectinfo.setForeground(MyColor.GRAY.getColor());
+		btnSubjectinfo.setFocusable(false);
+		btnSubjectinfo.setBorder(BorderFactory.createEmptyBorder());
+		btnSubjectinfo.setContentAreaFilled(false);
+		btnSubjectinfo.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				 highlightButtons(e.getLocationOnScreen(), btnSubjectinfo);
+			}
+			public void mouseExited(MouseEvent e) {
+				btnSubjectinfo.setContentAreaFilled(false);
+			}
+		});
+		
+		btnSubjectinfo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SubjectdownPanel.removeAll();
+				SubjectdownPanel.add(panelSubjectInfo);
+				SubjectdownPanel.repaint();
+				SubjectdownPanel.revalidate();
+				bgSubject.setBackground(MyColor.CORAL.getColor());
+				bgSubject.setBounds(0, 0, 168, 48);
+				panelSubjectSidepane.add(bgSubject);
+				panelSubjectSidepane.remove(bgCriteria);
+				panelSubjectSidepane.repaint();
+				panelSubjectSidepane.revalidate();
+			}
+		});
+		
+		bgSubject.setBackground(MyColor.CORAL.getColor());
+		bgSubject.setBounds(0, 0, 168, 48);
+		panelSubjectSidepane.add(bgSubject);
+		
+		JButton btnCriteria = new JButton("Criteria");
+		btnCriteria.setForeground(new Color(219, 227, 229));
+		btnCriteria.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 22));
+		btnCriteria.setFocusable(false);
+		btnCriteria.setContentAreaFilled(false);
+		btnCriteria.setBorder(BorderFactory.createEmptyBorder());
+		btnCriteria.setBounds(178, 0, 168, 48);
+		btnCriteria.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				SubjectdownPanel.removeAll();
+				SubjectdownPanel.add(panelCriteria);
+				SubjectdownPanel.repaint();
+				SubjectdownPanel.revalidate();
+				bgCriteria.setBackground(MyColor.CORAL.getColor());
+				bgCriteria.setBounds(178, 0, 168, 48);
+				panelSubjectSidepane.add(bgCriteria);
+				panelSubjectSidepane.remove(bgSubject);
+				panelSubjectSidepane.repaint();
+				panelSubjectSidepane.revalidate();
+			}
+		});
+		btnCriteria.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				 highlightButtons(e.getLocationOnScreen(), btnCriteria);
+			}
+			public void mouseExited(MouseEvent e) {
+				btnCriteria.setContentAreaFilled(false);
+			}
+		});
+		panelSubjectSidepane.add(btnCriteria);
+		
+		JLabel lblFillTheseInfomamation = new JLabel("Fill these information");
+		lblFillTheseInfomamation.setBounds(46, 56, 375, 50);
+		panelSubjectInfo.add(lblFillTheseInfomamation);
+		lblFillTheseInfomamation.setFont(new Font("Segoe UI Semilight", Font.BOLD, 37));
+		
+		JButton btnOk = new JButton("OK");
+		btnOk.setBounds(591, 366, 105, 36);
+		panelSubjectInfo.add(btnOk);
+		btnOk.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		btnOk.setForeground(MyColor.GRAY.getColor());
+		btnOk.setBackground(MyColor.MIDNIGHTBLUE.getColor());
+		btnOk.setFocusable(false);
+		btnOk.setBorder(BorderFactory.createEmptyBorder());
+		btnOk.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				 highlightButtons(e.getLocationOnScreen(), btnOk);
+			}
+			public void mouseExited(MouseEvent e) {
+				btnOk.setBackground(MyColor.MIDNIGHTBLUE.getColor());
+			}
+		});
+		
+		JPanel panelinfo = new JPanel();
+		panelinfo.setLayout(null);
+		panelinfo.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(), 2));
+		panelinfo.setBackground(new Color(219, 227, 229));
+		panelinfo.setBounds(46, 125, 650, 215);
+		panelSubjectInfo.add(panelinfo);
+		
+		JLabel labelSubjectName = new JLabel("Subject :");
+		labelSubjectName.setForeground(new Color(25, 56, 81));
+		labelSubjectName.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 24));
+		labelSubjectName.setBounds(24, 30, 103, 48);
+		panelinfo.add(labelSubjectName);
+		
+		JLabel labelTeacherName = new JLabel("Teacher Name :");
+		labelTeacherName.setForeground(new Color(25, 56, 81));
+		labelTeacherName.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 24));
+		labelTeacherName.setBounds(24, 87, 163, 40);
+		panelinfo.add(labelTeacherName);
+		
+		JSeparator separator_1 = new JSeparator();
+		separator_1.setForeground(new Color(25, 56, 81));
+		separator_1.setBackground(new Color(219, 227, 229));
+		separator_1.setBounds(134, 66, 423, 2);
+		panelinfo.add(separator_1);
+		
+		JTextField textFieldSubject = new JTextField();
+		textFieldSubject.setForeground(new Color(25, 56, 81));
+		textFieldSubject.setFont(new Font("Segoe UI Light", Font.PLAIN, 21));
+		textFieldSubject.setColumns(10);
+		textFieldSubject.setBorder(BorderFactory.createEmptyBorder());
+		textFieldSubject.setBackground(new Color(219, 227, 229));
+		textFieldSubject.setBounds(137, 35, 416, 28);
+		panelinfo.add(textFieldSubject);
+		
+		JSeparator separator_2 = new JSeparator();
+		separator_2.setForeground(new Color(25, 56, 81));
+		separator_2.setBackground(new Color(219, 227, 229));
+		separator_2.setBounds(197, 116, 360, 2);
+		panelinfo.add(separator_2);
+		
+		JTextField textFieldTeacher = new JTextField();
+		textFieldTeacher.setForeground(new Color(25, 56, 81));
+		textFieldTeacher.setFont(new Font("Segoe UI Light", Font.PLAIN, 21));
+		textFieldTeacher.setColumns(10);
+		textFieldTeacher.setBorder(BorderFactory.createEmptyBorder());
+		textFieldTeacher.setBackground(new Color(219, 227, 229));
+		textFieldTeacher.setBounds(198, 85, 356, 28);
+		panelinfo.add(textFieldTeacher);
+		
+		JLabel label_2 = new JLabel("How many quiz in this class :");
+		label_2.setForeground(new Color(25, 56, 81));
+		label_2.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 24));
+		label_2.setBounds(24, 137, 305, 40);
+		panelinfo.add(label_2);
+		
+		JTextField textFieldManyQuiz = new JTextField();
+		textFieldManyQuiz.setForeground(new Color(25, 56, 81));
+		textFieldManyQuiz.setFont(new Font("Segoe UI Light", Font.PLAIN, 21));
+		textFieldManyQuiz.setColumns(10);
+		textFieldManyQuiz.setBorder(BorderFactory.createEmptyBorder());
+		textFieldManyQuiz.setBackground(new Color(219, 227, 229));
+		textFieldManyQuiz.setBounds(333, 139, 223, 28);
+		panelinfo.add(textFieldManyQuiz);
+		
+		JSeparator separator_3 = new JSeparator();
+		separator_3.setForeground(new Color(25, 56, 81));
+		separator_3.setBackground(new Color(219, 227, 229));
+		separator_3.setBounds(330, 170, 227, 2);
+		panelinfo.add(separator_3);
 	}
 }
