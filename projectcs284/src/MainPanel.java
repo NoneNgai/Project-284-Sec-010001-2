@@ -40,16 +40,17 @@ public class MainPanel extends JPanel {
 	private JPanel bgPanelFillScore = new JPanel();
 	private JPanel bgPanelImport = new JPanel();
 	private JPanel bgPanelSubject = new JPanel();
-	private JPanel panelImport, panelFillScore,Subjectpanel;
+	private JPanel panelImport, panelFillScore, Subjectpanel;
 	private JTextField scoreField;
 	private JTextField IDtextField;
-	private JTable table,tableFillscore;
+	private JTable table, tableFillscore;
 	private ReadWriteExcelFile r = new ReadWriteExcelFile();
 	private ExamResult exam;
 	private JButton btnFillScore;
 	private StudentList std;
 	private JComboBox comboBox;
 	private ExamCriteria ec = new ExamCriteria();
+	private String subject;
 
 	public MainPanel() {
 
@@ -188,7 +189,7 @@ public class MainPanel extends JPanel {
 				rightSidePanel.repaint();
 				rightSidePanel.revalidate();
 				lblheader.setText("Subject  ");
-				setBgSidePanel(bgPanelSubject,227);
+				setBgSidePanel(bgPanelSubject, 227);
 				removeBgOther(bgPanelSubject);
 			}
 		});
@@ -547,10 +548,11 @@ public class MainPanel extends JPanel {
 
 				}
 
-				for (int i = 0; i < exam.size(); i++) {
-
-					System.out.println(std.getId(i) + "     " + exam.getScore(i));
-
+				try {
+					exam.saveList(std.getIDList(), exam.getScoreList(), comboBox.getSelectedItem() + "");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
 				}
 
 			}
@@ -603,7 +605,7 @@ public class MainPanel extends JPanel {
 		});
 		panelFillScore.add(btnID);
 	}
-	
+
 	public void subjectPanel() {
 		JLabel labelSubjectName = new JLabel("Subject :");
 		JButton btnCriteria = new JButton("Criteria");
@@ -613,22 +615,21 @@ public class MainPanel extends JPanel {
 		JTextField textFieldSubject = new JTextField();
 		JTextField textFieldTeacher = new JTextField();
 		JTextField textFieldManyQuiz = new JTextField();
-	
-		
+
 		Subjectpanel = new JPanel();
 		Subjectpanel.setBackground(MyColor.GRAY.getColor());
 		Subjectpanel.setLayout(null);
-		
+
 		JPanel panelSubjectSidepane;
 		JPanel bgSubject = new JPanel();
 		JPanel bgCriteria = new JPanel();
-		
+
 		panelSubjectSidepane = new JPanel();
 		panelSubjectSidepane.setBounds(3, 11, 740, 48);
 		panelSubjectSidepane.setBackground(MyColor.MIDNIGHTBLUE.getColor());
 		Subjectpanel.add(panelSubjectSidepane);
 		panelSubjectSidepane.setLayout(null);
-		
+
 		JPanel SubjectdownPanel = new JPanel();
 		SubjectdownPanel.setBounds(10, 71, 733, 489);
 		SubjectdownPanel.setLayout(null);
@@ -639,20 +640,18 @@ public class MainPanel extends JPanel {
 		SubjectdownPanel.add(panelSubjectInfo);
 		panelSubjectInfo.setLayout(null);
 		panelSubjectInfo.setBackground(MyColor.GRAY.getColor());
-		
+
 		JPanel panelCriteria = new JPanel();
 		panelCriteria.setBounds(0, 0, 733, 489);
 		panelCriteria.setBackground(MyColor.GRAY.getColor());
 		SubjectdownPanel.add(panelCriteria);
 		panelCriteria.setLayout(null);
-		
+
 		JLabel lblFill = new JLabel("Fill full score and criteria");
 		lblFill.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 35));
 		lblFill.setBounds(37, 21, 384, 63);
 		panelCriteria.add(lblFill);
-		
-		
-		
+
 		JButton btnSubjectinfo = new JButton("Subject");
 		btnSubjectinfo.setBounds(0, 0, 168, 48);
 		panelSubjectSidepane.add(btnSubjectinfo);
@@ -663,15 +662,15 @@ public class MainPanel extends JPanel {
 		btnSubjectinfo.setContentAreaFilled(false);
 		btnSubjectinfo.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
-				 highlightButtons(e.getLocationOnScreen(), btnSubjectinfo);
-				
-				 
+				highlightButtons(e.getLocationOnScreen(), btnSubjectinfo);
+
 			}
+
 			public void mouseExited(MouseEvent e) {
 				btnSubjectinfo.setContentAreaFilled(false);
 			}
 		});
-		
+
 		btnSubjectinfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				SubjectdownPanel.removeAll();
@@ -686,11 +685,11 @@ public class MainPanel extends JPanel {
 				panelSubjectSidepane.revalidate();
 			}
 		});
-		
+
 		bgSubject.setBackground(MyColor.CORAL.getColor());
 		bgSubject.setBounds(0, 0, 168, 48);
 		panelSubjectSidepane.add(bgSubject);
-		
+
 		JButton btnOKC = new JButton("OK");
 		btnOKC.setBounds(600, 426, 105, 36);
 		panelCriteria.add(btnOKC);
@@ -701,18 +700,35 @@ public class MainPanel extends JPanel {
 		btnOKC.setBorder(BorderFactory.createEmptyBorder());
 		btnOKC.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
-				 highlightButtons(e.getLocationOnScreen(), btnOKC);
+				highlightButtons(e.getLocationOnScreen(), btnOKC);
 			}
-			public void mouseClicked(MouseEvent e)
-			{
+
+			public void mouseClicked(MouseEvent e) {
+				int a = 0,b = 0;
+					for (int i = 0; i < tableFillscore.getRowCount(); i++) {
+						try {
+						 a = Integer.valueOf((String)tableFillscore.getValueAt(i, 1));
+						 b = Integer.valueOf((String )tableFillscore.getValueAt(i, 2));
+						ec.add("" + tableFillscore.getValueAt(i, 0),a,b);
+							
+						} catch (NumberFormatException n) {
+					System.out.println("Please Enter Number Not String ");
 				
+				}
+					}
+				try {
+					ec.saveList(ec.getTypeList(), ec.getMaxList(), ec.getPercentList(), subject);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
+
 			public void mouseExited(MouseEvent e) {
 				btnOKC.setBackground(MyColor.MIDNIGHTBLUE.getColor());
 			}
 		});
-		
-	
+
 		btnCriteria.setForeground(new Color(219, 227, 229));
 		btnCriteria.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 22));
 		btnCriteria.setFocusable(false);
@@ -721,18 +737,17 @@ public class MainPanel extends JPanel {
 		btnCriteria.setBounds(178, 0, 168, 48);
 		btnCriteria.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				SubjectdownPanel.removeAll();
 				String head[] = { "Name", "Full Score", "Criteria (%)" };
 
 				tableFillscore = new JTable(ec.getTable(), head);
-				
-				JScrollPane scrollPane = new JScrollPane(tableFillscore );
+
+				JScrollPane scrollPane = new JScrollPane(tableFillscore);
 				scrollPane.setBounds(147, 95, 432, 365);
 				scrollPane.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(), 2));
 				panelCriteria.add(scrollPane);
-				
-				
+
 				SubjectdownPanel.add(panelCriteria);
 				SubjectdownPanel.repaint();
 				SubjectdownPanel.revalidate();
@@ -746,19 +761,19 @@ public class MainPanel extends JPanel {
 		});
 		btnCriteria.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
-				 highlightButtons(e.getLocationOnScreen(), btnCriteria);
+				highlightButtons(e.getLocationOnScreen(), btnCriteria);
 			}
+
 			public void mouseExited(MouseEvent e) {
 				btnCriteria.setContentAreaFilled(false);
 			}
 		});
 		panelSubjectSidepane.add(btnCriteria);
-		
-	
+
 		lblFillTheseInfomamation.setBounds(46, 56, 375, 50);
 		panelSubjectInfo.add(lblFillTheseInfomamation);
 		lblFillTheseInfomamation.setFont(new Font("Segoe UI Semilight", Font.BOLD, 37));
-		
+
 		JButton btnOk = new JButton("OK");
 		btnOk.setBounds(591, 366, 105, 36);
 		panelSubjectInfo.add(btnOk);
@@ -769,49 +784,44 @@ public class MainPanel extends JPanel {
 		btnOk.setBorder(BorderFactory.createEmptyBorder());
 		btnOk.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
-				 highlightButtons(e.getLocationOnScreen(), btnOk);
+				highlightButtons(e.getLocationOnScreen(), btnOk);
 			}
-			public void mouseClicked(MouseEvent e)
-			{
-				System.out.println(	textFieldSubject .getText());
-				System.out.println(	 textFieldTeacher.getText());
-				System.out.println(	textFieldManyQuiz.getText());
+
+			public void mouseClicked(MouseEvent e) {
+
+				subject = textFieldSubject.getText();
 				ec.setSize(Integer.valueOf(textFieldManyQuiz.getText()));
-				
-			
+
 			}
+
 			public void mouseExited(MouseEvent e) {
 				btnOk.setBackground(MyColor.MIDNIGHTBLUE.getColor());
 			}
 		});
-		
+
 		JPanel panelinfo = new JPanel();
 		panelinfo.setLayout(null);
 		panelinfo.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(), 2));
 		panelinfo.setBackground(new Color(219, 227, 229));
 		panelinfo.setBounds(46, 125, 650, 215);
 		panelSubjectInfo.add(panelinfo);
-		
-	
+
 		labelSubjectName.setForeground(new Color(25, 56, 81));
 		labelSubjectName.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 24));
 		labelSubjectName.setBounds(24, 30, 103, 48);
 		panelinfo.add(labelSubjectName);
-		
-		
+
 		labelTeacherName.setForeground(new Color(25, 56, 81));
 		labelTeacherName.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 24));
 		labelTeacherName.setBounds(24, 87, 163, 40);
 		panelinfo.add(labelTeacherName);
-		
+
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setForeground(new Color(25, 56, 81));
 		separator_1.setBackground(new Color(219, 227, 229));
 		separator_1.setBounds(134, 66, 423, 2);
 		panelinfo.add(separator_1);
-		
-	
-		
+
 		textFieldSubject.setForeground(new Color(25, 56, 81));
 		textFieldSubject.setFont(new Font("Segoe UI Light", Font.PLAIN, 21));
 		textFieldSubject.setColumns(10);
@@ -819,14 +829,13 @@ public class MainPanel extends JPanel {
 		textFieldSubject.setBackground(new Color(219, 227, 229));
 		textFieldSubject.setBounds(137, 35, 416, 28);
 		panelinfo.add(textFieldSubject);
-		
+
 		JSeparator separator_2 = new JSeparator();
 		separator_2.setForeground(new Color(25, 56, 81));
 		separator_2.setBackground(new Color(219, 227, 229));
 		separator_2.setBounds(197, 116, 360, 2);
 		panelinfo.add(separator_2);
-		
-		
+
 		textFieldTeacher.setForeground(new Color(25, 56, 81));
 		textFieldTeacher.setFont(new Font("Segoe UI Light", Font.PLAIN, 21));
 		textFieldTeacher.setColumns(10);
@@ -834,14 +843,12 @@ public class MainPanel extends JPanel {
 		textFieldTeacher.setBackground(new Color(219, 227, 229));
 		textFieldTeacher.setBounds(198, 85, 356, 28);
 		panelinfo.add(textFieldTeacher);
-		
-		
+
 		label_2.setForeground(new Color(25, 56, 81));
 		label_2.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 24));
 		label_2.setBounds(24, 137, 305, 40);
 		panelinfo.add(label_2);
-		
-	
+
 		textFieldManyQuiz.setForeground(new Color(25, 56, 81));
 		textFieldManyQuiz.setFont(new Font("Segoe UI Light", Font.PLAIN, 21));
 		textFieldManyQuiz.setColumns(10);
@@ -849,7 +856,7 @@ public class MainPanel extends JPanel {
 		textFieldManyQuiz.setBackground(new Color(219, 227, 229));
 		textFieldManyQuiz.setBounds(333, 139, 223, 28);
 		panelinfo.add(textFieldManyQuiz);
-		
+
 		JSeparator separator_3 = new JSeparator();
 		separator_3.setForeground(new Color(25, 56, 81));
 		separator_3.setBackground(new Color(219, 227, 229));

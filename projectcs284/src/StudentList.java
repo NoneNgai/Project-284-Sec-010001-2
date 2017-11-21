@@ -73,7 +73,7 @@ public class StudentList {
 
 	public void saveList(ArrayList<Long> id,String nameFile) throws IOException,FileException {
 		
-			File file = new File ("cs284.txt");
+			File file = new File ("cs284_StudentList");
 			FileWriter f = new FileWriter(file);
 			BufferedWriter write= new BufferedWriter(f);
 			
