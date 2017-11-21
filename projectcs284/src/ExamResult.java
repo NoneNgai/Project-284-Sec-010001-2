@@ -35,8 +35,4 @@ public class ExamResult {
 
 	}
 
-	public static void main(String[] args) {
-		ExamResult e = new ExamResult();
-
-	}
 }

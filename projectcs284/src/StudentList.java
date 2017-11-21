@@ -1,15 +1,18 @@
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
-
-
 
 public class StudentList {
 	private ArrayList<Long> id;
@@ -57,12 +60,33 @@ public class StudentList {
 		}
 		return true;
 	}
+	public ArrayList<String> getNameList()
+	{
+		return name;
+	}
 
 	public void clearList() {
 		id.clear();
 		name.clear();
 		email.clear();
 	}
+
+	public void saveList(ArrayList<Long> id,String nameFile) throws IOException,FileException {
+		
+			File file = new File ("cs284.txt");
+			FileWriter f = new FileWriter(file);
+			BufferedWriter write= new BufferedWriter(f);
+			
+			write.write(nameFile);
+			write.write("\n");
+			for (int i=0;i<id.size();i++) 
+			{
+				write.write(id.get(i)+"\n");
+			}
+			write.close();
+			f.close();
+	
+		}
 
 	public String[][] getTable() {
 		String[][] table = new String[id.size()][3];
