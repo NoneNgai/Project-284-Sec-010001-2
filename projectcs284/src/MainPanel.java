@@ -691,6 +691,27 @@ public class MainPanel extends JPanel {
 		bgSubject.setBounds(0, 0, 168, 48);
 		panelSubjectSidepane.add(bgSubject);
 		
+		JButton btnOKC = new JButton("OK");
+		btnOKC.setBounds(600, 426, 105, 36);
+		panelCriteria.add(btnOKC);
+		btnOKC.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		btnOKC.setForeground(MyColor.GRAY.getColor());
+		btnOKC.setBackground(MyColor.MIDNIGHTBLUE.getColor());
+		btnOKC.setFocusable(false);
+		btnOKC.setBorder(BorderFactory.createEmptyBorder());
+		btnOKC.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent e) {
+				 highlightButtons(e.getLocationOnScreen(), btnOKC);
+			}
+			public void mouseClicked(MouseEvent e)
+			{
+				
+			}
+			public void mouseExited(MouseEvent e) {
+				btnOKC.setBackground(MyColor.MIDNIGHTBLUE.getColor());
+			}
+		});
+		
 	
 		btnCriteria.setForeground(new Color(219, 227, 229));
 		btnCriteria.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 22));
