@@ -1,3 +1,5 @@
+/// LINE 539 FILL SCORE
+/// LINE 707 FILL CRITERIA 
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -50,7 +52,7 @@ public class MainPanel extends JPanel {
 	private StudentList std;
 	private JComboBox comboBox;
 	private ExamCriteria ec = new ExamCriteria();
-	private String subject;
+	private String subject,manyquiz;
 
 	public MainPanel() {
 
@@ -448,6 +450,8 @@ public class MainPanel extends JPanel {
 	}
 
 	public void fillScorePanel() {
+		exam = new ExamResult();
+		std = new StudentList();
 
 		panelFillScore = new JPanel();
 		panelFillScore.setBackground(MyColor.GRAY.getColor());
@@ -465,23 +469,27 @@ public class MainPanel extends JPanel {
 		lblSubjectname.setBounds(394, 30, 74, 30);
 		panelFillScore.add(lblSubjectname);
 
-		String[] item = { "", "Quiz 1", "Quiz 2" };
+		String[] item = { "","Midterm","Final" };
 		comboBox = new JComboBox(item);
 		comboBox.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		comboBox.setBounds(266, 82, 222, 30);
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// if (comboBox.getSelectedItem().equals("Quiz 1")) {
+				
 				String head[] = { "Student ID", "Name", "Score" };
-
+				
 				table = new JTable(r.getTable(), head);
+				/*for (int i = 0; i < table.getRowCount(); i++) {
+					 table.setValueAt("0", i, 2);
+					
+				}*/
 				panelFillScore.add(table);
 
 				JScrollPane scrollPane = new JScrollPane(table);
 				scrollPane.setBounds(175, 192, 406, 310);
 				scrollPane.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(), 2));
 				panelFillScore.add(scrollPane);
-				// }
+			
 			}
 		});
 		panelFillScore.add(comboBox);
@@ -536,12 +544,10 @@ public class MainPanel extends JPanel {
 
 				highlightButtons(e.getLocationOnScreen(), btnOK);
 			}
-
+///////////////////////////////////////// FILL SCORE ACTIONLISTENER ////////////////////////////////
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				exam = new ExamResult();
-				std = new StudentList();
-
+			
 				for (int i = 0; i < table.getRowCount(); i++) {
 					exam.add("" + table.getValueAt(i, 2));
 					std.addID(Long.valueOf((String) table.getValueAt(i, 0)));
@@ -557,7 +563,8 @@ public class MainPanel extends JPanel {
 
 			}
 		});
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		panelFillScore.add(btnOK);
 
 		IDtextField = new JTextField();
@@ -702,7 +709,8 @@ public class MainPanel extends JPanel {
 			public void mouseEntered(MouseEvent e) {
 				highlightButtons(e.getLocationOnScreen(), btnOKC);
 			}
-
+			
+///////////////////////////////////////// FILL CRITERIA ACTIONLISTENER ////////////////////////////////
 			public void mouseClicked(MouseEvent e) {
 				int a = 0,b = 0;
 					for (int i = 0; i < tableFillscore.getRowCount(); i++) {
@@ -717,7 +725,7 @@ public class MainPanel extends JPanel {
 				}
 					}
 				try {
-					ec.saveList(ec.getTypeList(), ec.getMaxList(), ec.getPercentList(), subject);
+					ec.saveList(ec.getTypeList(), ec.getMaxList(), ec.getPercentList(), subject,manyquiz);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -728,7 +736,8 @@ public class MainPanel extends JPanel {
 				btnOKC.setBackground(MyColor.MIDNIGHTBLUE.getColor());
 			}
 		});
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		btnCriteria.setForeground(new Color(219, 227, 229));
 		btnCriteria.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 22));
 		btnCriteria.setFocusable(false);
@@ -790,6 +799,7 @@ public class MainPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 
 				subject = textFieldSubject.getText();
+				manyquiz =  textFieldManyQuiz.getText();
 				ec.setSize(Integer.valueOf(textFieldManyQuiz.getText()));
 
 			}

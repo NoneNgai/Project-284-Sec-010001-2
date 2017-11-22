@@ -55,13 +55,14 @@ public class ExamCriteria {
 		this.size = size;
 	}
 	
-	public void saveList(ArrayList<String> type,ArrayList<Integer> max,ArrayList<Integer> percent,String nameTeacher) throws IOException,FileException {
+	public void saveList(ArrayList<String> type,ArrayList<Integer> max,ArrayList<Integer> percent,String nameSubject,String manyQuiz) throws IOException,FileException {
 		
 		File file = new File ("cs284_Criteria");
 		FileWriter f = new FileWriter(file);
 		BufferedWriter write= new BufferedWriter(f);
 		
-		write.write(nameTeacher);
+		write.write(nameSubject+"\n");
+		write.write(manyQuiz+"\n");
 		for (int i=0;i<type.size();i++) 
 		{
 			write.write(type.get(i)+"\t"+max.get(i)+"\t"+percent.get(i)+"\n");
