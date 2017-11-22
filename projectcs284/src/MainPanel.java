@@ -468,7 +468,9 @@ public class MainPanel extends JPanel {
 		lblSubjectname.setFont(new Font("Segoe UI Light", Font.PLAIN, 25));
 		lblSubjectname.setBounds(394, 30, 74, 30);
 		panelFillScore.add(lblSubjectname);
-
+		
+////////////////////////////////////////////////COMBOBOX LISTENER /////////////////////////////////////////////////////
+		
 		String[] item = { "","Midterm","Final" };
 		comboBox = new JComboBox(item);
 		comboBox.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
@@ -478,11 +480,8 @@ public class MainPanel extends JPanel {
 				
 				String head[] = { "Student ID", "Name", "Score" };
 				
+
 				table = new JTable(r.getTable(), head);
-				/*for (int i = 0; i < table.getRowCount(); i++) {
-					 table.setValueAt("0", i, 2);
-					
-				}*/
 				panelFillScore.add(table);
 
 				JScrollPane scrollPane = new JScrollPane(table);
@@ -493,7 +492,8 @@ public class MainPanel extends JPanel {
 			}
 		});
 		panelFillScore.add(comboBox);
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		JButton btnCancel = new JButton("Cancel");
 		btnCancel.setForeground(new Color(219, 227, 229));
 		btnCancel.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));

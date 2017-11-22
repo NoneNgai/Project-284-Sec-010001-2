@@ -66,7 +66,7 @@ public class ReadWriteExcelFile {
 				}
 				countcol = 0;
 			}
-			list.saveList(list.getIDList(),"cs284");
+			list.saveList(list.getIDList(),list.getNameList(),"cs284");
 			wb.close();
 		}
 

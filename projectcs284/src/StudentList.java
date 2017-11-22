@@ -51,6 +51,10 @@ public class StudentList {
 		this.name.add(name);
 	}
 
+	public String getName(int index) {
+		return name.get(index);
+	}
+	
 	public boolean isFilled() {
 		if (id.isEmpty()) {
 			return false;
@@ -60,8 +64,8 @@ public class StudentList {
 		}
 		return true;
 	}
-	public ArrayList<String> getNameList()
-	{
+
+	public ArrayList<String> getNameList() {
 		return name;
 	}
 
@@ -71,22 +75,22 @@ public class StudentList {
 		email.clear();
 	}
 
-	public void saveList(ArrayList<Long> id,String nameFile) throws IOException,FileException {
-		
-			File file = new File ("cs284_StudentList");
-			FileWriter f = new FileWriter(file);
-			BufferedWriter write= new BufferedWriter(f);
-			
-			write.write(nameFile);
-			write.write("\n");
-			for (int i=0;i<id.size();i++) 
-			{
-				write.write(id.get(i)+"\n");
-			}
-			write.close();
-			f.close();
-	
+	public void saveList(ArrayList<Long> id, ArrayList<String> name, String nameFile)
+			throws IOException, FileException {
+
+		File file = new File("cs284_StudentList");
+		FileWriter f = new FileWriter(file);
+		BufferedWriter write = new BufferedWriter(f);
+
+		write.write(nameFile);
+		write.write("\n");
+		for (int i = 0; i < id.size(); i++) {
+			write.write(id.get(i) + "  " + name.get(i) + "\n");
 		}
+		write.close();
+		f.close();
+
+	}
 
 	public String[][] getTable() {
 		String[][] table = new String[id.size()][3];
