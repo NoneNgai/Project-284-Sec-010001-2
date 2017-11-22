@@ -12,6 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -469,29 +471,6 @@ public class MainPanel extends JPanel {
 		lblSubjectname.setBounds(394, 30, 74, 30);
 		panelFillScore.add(lblSubjectname);
 		
-////////////////////////////////////////////////COMBOBOX LISTENER /////////////////////////////////////////////////////
-		
-		String[] item = { "","Midterm","Final" };
-		comboBox = new JComboBox(item);
-		comboBox.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
-		comboBox.setBounds(266, 82, 222, 30);
-		comboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				String head[] = { "Student ID", "Name", "Score" };
-				
-
-				table = new JTable(r.getTable(), head);
-				panelFillScore.add(table);
-
-				JScrollPane scrollPane = new JScrollPane(table);
-				scrollPane.setBounds(175, 192, 406, 310);
-				scrollPane.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(), 2));
-				panelFillScore.add(scrollPane);
-			
-			}
-		});
-		panelFillScore.add(comboBox);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		JButton btnCancel = new JButton("Cancel");
@@ -611,6 +590,39 @@ public class MainPanel extends JPanel {
 			}
 		});
 		panelFillScore.add(btnID);
+		
+////////////////////////////////////////////////COMBOBOX LISTENER /////////////////////////////////////////////////////
+		
+		String[] item = { "","Midterm","Final" };
+		comboBox = new JComboBox(item);
+		comboBox.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
+		comboBox.setBounds(266, 82, 222, 30);
+		panelFillScore.add(comboBox);
+		comboBox.addActionListener (new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelFillScore.removeAll();
+				panelFillScore.repaint();
+				panelFillScore.revalidate();
+				panelFillScore.add(lblSubjectname);
+				panelFillScore.add(lblSubjectTitle);
+				panelFillScore.add(comboBox);
+				panelFillScore.add(btnOK);
+				panelFillScore.add(btnID);
+				panelFillScore.add(btnCancel);
+				panelFillScore.add(IDtextField);
+				
+				String head[] = { "Student ID", "Name", "Score" };
+
+				table = new JTable(r.getTable(), head);
+				panelFillScore.add(table);
+
+				JScrollPane scrollPane = new JScrollPane(table);
+				scrollPane.setBounds(175, 192, 406, 310);
+				scrollPane.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(), 2));
+				panelFillScore.add(scrollPane);
+			}
+		});
+
 	}
 
 	public void subjectPanel() {

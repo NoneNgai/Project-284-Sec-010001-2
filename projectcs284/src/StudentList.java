@@ -25,6 +25,7 @@ public class StudentList {
 		id = new ArrayList<>();
 		name = new ArrayList<>();
 		email = new ArrayList<>();
+		e = new ExamResult();
 
 	}
 
@@ -33,9 +34,7 @@ public class StudentList {
 	}
 
 	public void addID(long id) {
-
 		this.id.add(id);
-
 	}
 
 	public int size() {
