@@ -44,7 +44,8 @@ public class MainPanel extends JPanel {
 	private JPanel bgPanelFillScore = new JPanel();
 	private JPanel bgPanelImport = new JPanel();
 	private JPanel bgPanelSubject = new JPanel();
-	private JPanel panelImport, panelFillScore, Subjectpanel;
+	private JPanel bgPanelExport = new JPanel();
+	private JPanel panelImport, panelFillScore, Subjectpanel, panelExport;
 	private JTextField scoreField;
 	private JTextField IDtextField;
 	private JTable table, tableFillscore;
@@ -148,6 +149,7 @@ public class MainPanel extends JPanel {
 		importPanel();
 		fillScorePanel();
 		subjectPanel();
+		exportPanel();
 
 		/////// Button on Sidepane
 
@@ -272,6 +274,17 @@ public class MainPanel extends JPanel {
 				btnExport.setContentAreaFilled(false);
 			}
 		});
+		btnExport.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				rightSidePanel.removeAll();
+				rightSidePanel.add(panelExport);
+				rightSidePanel.repaint();
+				rightSidePanel.revalidate();
+				lblheader.setText("Export ");
+				setBgSidePanel(bgPanelExport, 385);
+				removeBgOther(bgPanelExport);
+			}
+		});
 		sidepane.add(btnExport);
 	}
 
@@ -301,18 +314,28 @@ public class MainPanel extends JPanel {
 		if (panel.equals(bgPanelFillScore)) {
 			sidepane.remove(bgPanelImport);
 			sidepane.remove(bgPanelSubject);
+			sidepane.remove(bgPanelExport);
 			sidepane.repaint();
 			sidepane.revalidate();
 		}
 		if (panel.equals(bgPanelImport)) {
 			sidepane.remove(bgPanelFillScore);
 			sidepane.remove(bgPanelSubject);
+			sidepane.remove(bgPanelExport);
 			sidepane.repaint();
 			sidepane.revalidate();
 		}
 		if (panel.equals(bgPanelSubject)) {
 			sidepane.remove(bgPanelFillScore);
 			sidepane.remove(bgPanelImport);
+			sidepane.remove(bgPanelExport);
+			sidepane.repaint();
+			sidepane.revalidate();
+		}
+		if (panel.equals(bgPanelExport)) {
+			sidepane.remove(bgPanelFillScore);
+			sidepane.remove(bgPanelImport);
+			sidepane.remove(bgPanelSubject);
 			sidepane.repaint();
 			sidepane.revalidate();
 		}
@@ -620,19 +643,22 @@ public class MainPanel extends JPanel {
 				scrollPane.setBounds(175, 192, 406, 310);
 				scrollPane.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(), 2));
 				panelFillScore.add(scrollPane);
+				
+				btnID.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+					}
+				});
+				
 			}
 		});
 
 	}
 
 	public void subjectPanel() {
-		JLabel labelSubjectName = new JLabel("Subject :");
 		JButton btnCriteria = new JButton("Criteria");
 		JLabel lblFillTheseInfomamation = new JLabel("Fill these information");
-		JLabel labelTeacherName = new JLabel("Teacher Name :");
-		JLabel label_2 = new JLabel("How many quiz in this class :");
-		JTextField textFieldSubject = new JTextField();
-		JTextField textFieldTeacher = new JTextField();
+		JLabel labelQuiz = new JLabel("How many quiz in this class :");
 		JTextField textFieldManyQuiz = new JTextField();
 
 		Subjectpanel = new JPanel();
@@ -796,7 +822,7 @@ public class MainPanel extends JPanel {
 		lblFillTheseInfomamation.setFont(new Font("Segoe UI Semilight", Font.BOLD, 37));
 
 		JButton btnOk = new JButton("OK");
-		btnOk.setBounds(591, 366, 105, 36);
+		btnOk.setBounds(591, 380, 105, 36);
 		panelSubjectInfo.add(btnOk);
 		btnOk.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		btnOk.setForeground(MyColor.GRAY.getColor());
@@ -810,7 +836,6 @@ public class MainPanel extends JPanel {
 
 			public void mouseClicked(MouseEvent e) {
 
-				subject = textFieldSubject.getText();
 				manyquiz =  textFieldManyQuiz.getText();
 				ec.setSize(Integer.valueOf(textFieldManyQuiz.getText()));
 
@@ -825,64 +850,159 @@ public class MainPanel extends JPanel {
 		panelinfo.setLayout(null);
 		panelinfo.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(), 2));
 		panelinfo.setBackground(new Color(219, 227, 229));
-		panelinfo.setBounds(46, 125, 650, 215);
+		panelinfo.setBounds(46, 125, 650, 85);
 		panelSubjectInfo.add(panelinfo);
 
-		labelSubjectName.setForeground(new Color(25, 56, 81));
-		labelSubjectName.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 24));
-		labelSubjectName.setBounds(24, 30, 103, 48);
-		panelinfo.add(labelSubjectName);
-
-		labelTeacherName.setForeground(new Color(25, 56, 81));
-		labelTeacherName.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 24));
-		labelTeacherName.setBounds(24, 87, 163, 40);
-		panelinfo.add(labelTeacherName);
-
-		JSeparator separator_1 = new JSeparator();
-		separator_1.setForeground(new Color(25, 56, 81));
-		separator_1.setBackground(new Color(219, 227, 229));
-		separator_1.setBounds(134, 66, 423, 2);
-		panelinfo.add(separator_1);
-
-		textFieldSubject.setForeground(new Color(25, 56, 81));
-		textFieldSubject.setFont(new Font("Segoe UI Light", Font.PLAIN, 21));
-		textFieldSubject.setColumns(10);
-		textFieldSubject.setBorder(BorderFactory.createEmptyBorder());
-		textFieldSubject.setBackground(new Color(219, 227, 229));
-		textFieldSubject.setBounds(137, 35, 416, 28);
-		panelinfo.add(textFieldSubject);
-
-		JSeparator separator_2 = new JSeparator();
-		separator_2.setForeground(new Color(25, 56, 81));
-		separator_2.setBackground(new Color(219, 227, 229));
-		separator_2.setBounds(197, 116, 360, 2);
-		panelinfo.add(separator_2);
-
-		textFieldTeacher.setForeground(new Color(25, 56, 81));
-		textFieldTeacher.setFont(new Font("Segoe UI Light", Font.PLAIN, 21));
-		textFieldTeacher.setColumns(10);
-		textFieldTeacher.setBorder(BorderFactory.createEmptyBorder());
-		textFieldTeacher.setBackground(new Color(219, 227, 229));
-		textFieldTeacher.setBounds(198, 85, 356, 28);
-		panelinfo.add(textFieldTeacher);
-
-		label_2.setForeground(new Color(25, 56, 81));
-		label_2.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 24));
-		label_2.setBounds(24, 137, 305, 40);
-		panelinfo.add(label_2);
+		labelQuiz.setForeground(new Color(25, 56, 81));
+		labelQuiz.setFont(new Font("Segoe UI Semilight", Font.PLAIN, 24));
+		labelQuiz.setBounds(24, 20, 305, 40);
+		panelinfo.add(labelQuiz);
 
 		textFieldManyQuiz.setForeground(new Color(25, 56, 81));
 		textFieldManyQuiz.setFont(new Font("Segoe UI Light", Font.PLAIN, 21));
 		textFieldManyQuiz.setColumns(10);
 		textFieldManyQuiz.setBorder(BorderFactory.createEmptyBorder());
 		textFieldManyQuiz.setBackground(new Color(219, 227, 229));
-		textFieldManyQuiz.setBounds(333, 139, 223, 28);
+		textFieldManyQuiz.setBounds(333, 24, 223, 28);
 		panelinfo.add(textFieldManyQuiz);
 
 		JSeparator separator_3 = new JSeparator();
 		separator_3.setForeground(new Color(25, 56, 81));
 		separator_3.setBackground(new Color(219, 227, 229));
-		separator_3.setBounds(330, 170, 227, 2);
+		separator_3.setBounds(330, 55, 227, 2);
 		panelinfo.add(separator_3);
+		
+		JPanel panelGrade = new JPanel();
+		panelGrade.setLayout(null);
+		panelGrade.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(),2));
+		panelGrade.setBackground(MyColor.GRAY.getColor());
+		panelGrade.setBounds(45, 220, 650, 140);
+		panelSubjectInfo.add(panelGrade);
 	}
+	
+	public void exportPanel() {
+		
+		panelExport = new JPanel();
+		panelExport.setBackground(MyColor.GRAY.getColor());
+		panelExport.setLayout(null);
+
+		JLabel lblUpdateStatus = new JLabel("didn't select file yet.");
+		lblUpdateStatus.setForeground(MyColor.RED.getColor());
+		lblUpdateStatus.setFont(new Font("Segoe UI Light", Font.PLAIN, 22));
+		lblUpdateStatus.setBounds(262, 149, 328, 41);
+		panelExport.add(lblUpdateStatus);
+
+		JTextField fileTextField = new JTextField();
+		fileTextField.setForeground(MyColor.MIDNIGHTBLUE.getColor());
+		fileTextField.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(), 2));
+		fileTextField.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 16));
+		fileTextField.setEditable(false);
+		fileTextField.setBounds(138, 212, 409, 41);
+		panelExport.add(fileTextField);
+		fileTextField.setColumns(10);
+
+		JButton btnAddfile = new JButton(new ImageIcon("resource//image//addfile.png"));
+		btnAddfile.setBounds(545, 212, 45, 41);
+		btnAddfile.setBackground(MyColor.MIDNIGHTBLUE.getColor());
+		btnAddfile.setBorderPainted(false);
+		btnAddfile.setFocusable(false);
+		btnAddfile.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+
+				JFileChooser fileopen = new JFileChooser();
+				FileFilter filter = new FileNameExtensionFilter("Excel Workbook (*.xlsx)", "xlsx");
+				FileFilter filter2 = new FileNameExtensionFilter("Excel 97-2009 Workbook (*.xls)", "xls");
+				fileopen.addChoosableFileFilter(filter);
+				fileopen.addChoosableFileFilter(filter2);
+
+				int ret = fileopen.showDialog(null, "Export");
+
+				if (ret == JFileChooser.APPROVE_OPTION) {
+					String fileString = fileopen.getSelectedFile().toString();
+
+					fileTextField.setText(fileString);
+					btnFillScore.setEnabled(true);
+
+				} else {
+					fileTextField.setText("");
+
+				}
+
+			}
+		});
+		btnAddfile.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent event) {
+				highlightButtons(event.getLocationOnScreen(), btnAddfile);
+			}
+
+			public void mouseExited(MouseEvent event) {
+				btnAddfile.setBackground(MyColor.MIDNIGHTBLUE.getColor());
+			}
+		});
+		panelExport.add(btnAddfile);
+
+		JButton btnOK = new JButton((Icon) null);
+		btnOK.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));
+		btnOK.setForeground(MyColor.GRAY.getColor());
+		btnOK.setText("OK");
+		btnOK.setFocusable(false);
+		btnOK.setBorderPainted(false);
+		btnOK.setBackground(new Color(22, 56, 81));
+		btnOK.setBounds(353, 286, 97, 41);
+		btnOK.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (!fileTextField.getText().trim().isEmpty()) {
+						
+					} else {
+						lblUpdateStatus.setForeground(MyColor.RED.getColor());
+						lblUpdateStatus.setText("Please select file first");
+					}
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnOK.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent event) {
+				highlightButtons(event.getLocationOnScreen(), btnOK);
+			}
+
+			public void mouseExited(MouseEvent event) {
+				btnOK.setBackground(MyColor.MIDNIGHTBLUE.getColor());
+			}
+		});
+		panelExport.add(btnOK);
+
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setForeground(new Color(219, 227, 229));
+		btnCancel.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));
+		btnCancel.setFocusable(false);
+		btnCancel.setBorderPainted(false);
+		btnCancel.setBackground(new Color(22, 56, 81));
+		btnCancel.setBounds(460, 286, 130, 41);
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fileTextField.setText("");
+			}
+		});
+		btnCancel.addMouseListener(new MouseAdapter() {
+			public void mouseEntered(MouseEvent event) {
+				highlightButtons(event.getLocationOnScreen(), btnCancel);
+			}
+
+			public void mouseExited(MouseEvent event) {
+				btnCancel.setBackground(MyColor.MIDNIGHTBLUE.getColor());
+			}
+		});
+		panelExport.add(btnCancel);
+
+		JLabel lblStatus = new JLabel("File Status : ");
+		lblStatus.setForeground(MyColor.MIDNIGHTBLUE.getColor());
+		lblStatus.setFont(new Font("Segoe UI Light", Font.BOLD, 22));
+		lblStatus.setBounds(138, 149, 149, 41);
+		panelExport.add(lblStatus);
+	}
+	
 }
