@@ -3,6 +3,8 @@
 import javax.swing.JPanel; 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -871,11 +873,31 @@ public class MainPanel extends JPanel {
 		panelinfo.add(separator_3);
 		
 		JPanel panelGrade = new JPanel();
-		panelGrade.setLayout(null);
+		panelGrade.setLayout(new FlowLayout());
 		panelGrade.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(),2));
 		panelGrade.setBackground(MyColor.GRAY.getColor());
 		panelGrade.setBounds(45, 220, 650, 140);
 		panelSubjectInfo.add(panelGrade);
+		
+		////////////////////////////////////////////////////////////////////////Grade Score
+		
+		JTextField AField = new JTextField(5);
+		JTextField BField = new JTextField(5);
+		JTextField CField = new JTextField(5);
+		JTextField DField = new JTextField(5);
+		JLabel lblA = new JLabel("A");
+		JLabel lblB = new JLabel("B");
+		JLabel lblC = new JLabel("C");
+		JLabel lblD = new JLabel("D");
+		panelGrade.add(lblA);
+		panelGrade.add(AField);
+		panelGrade.add(lblB);
+		panelGrade.add(BField);
+		panelGrade.add(lblC);
+		panelGrade.add(CField);
+		panelGrade.add(lblD);
+		panelGrade.add(DField);
+		
 	}
 	
 	public void exportPanel() {
