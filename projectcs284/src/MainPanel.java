@@ -1,6 +1,6 @@
 /// LINE 539 FILL SCORE
 /// LINE 707 FILL CRITERIA 
-import javax.swing.JPanel;
+import javax.swing.JPanel; 
 import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JLabel;
@@ -689,7 +689,6 @@ public class MainPanel extends JPanel {
 		JPanel panelCriteria = new JPanel();
 		panelCriteria.setBounds(0, 0, 733, 489);
 		panelCriteria.setBackground(MyColor.GRAY.getColor());
-		SubjectdownPanel.add(panelCriteria);
 		panelCriteria.setLayout(null);
 
 		JLabel lblFill = new JLabel("Fill full score and criteria");
@@ -708,7 +707,6 @@ public class MainPanel extends JPanel {
 		btnSubjectinfo.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
 				highlightButtons(e.getLocationOnScreen(), btnSubjectinfo);
-
 			}
 
 			public void mouseExited(MouseEvent e) {
