@@ -885,16 +885,28 @@ public class MainPanel extends JPanel {
 		JTextField BField = new JTextField(5);
 		JTextField CField = new JTextField(5);
 		JTextField DField = new JTextField(5);
+		JTextField BpField = new JTextField(5);
+		JTextField CpField = new JTextField(5);
+		JTextField DpField = new JTextField(5);
 		JLabel lblA = new JLabel("A");
 		JLabel lblB = new JLabel("B");
 		JLabel lblC = new JLabel("C");
 		JLabel lblD = new JLabel("D");
+		JLabel lblBp = new JLabel("B+");
+		JLabel lblCp = new JLabel("C+");
+		JLabel lblDp = new JLabel("D+");
 		panelGrade.add(lblA);
 		panelGrade.add(AField);
+		panelGrade.add(lblBp);
+		panelGrade.add(BpField);
 		panelGrade.add(lblB);
 		panelGrade.add(BField);
+		panelGrade.add(lblCp);
+		panelGrade.add(CpField);
 		panelGrade.add(lblC);
 		panelGrade.add(CField);
+		panelGrade.add(lblDp);
+		panelGrade.add(DpField);
 		panelGrade.add(lblD);
 		panelGrade.add(DField);
 		
