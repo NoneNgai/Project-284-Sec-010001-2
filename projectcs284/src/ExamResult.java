@@ -131,7 +131,8 @@ public class ExamResult {
 		FileWriter wr = new FileWriter(new File("cs284_result"));
 		BufferedWriter write = new BufferedWriter(wr);
 		for (int i = 0; i < result.size(); i++) {
-			write.write(result.get(i)+"\n");
+			write.write(result.get(i));
+			write.newLine();
 		}
 		write.close();
 		wr.close();
@@ -149,7 +150,6 @@ public class ExamResult {
 		try {
 			r.calculate();
 		} catch (NumberFormatException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

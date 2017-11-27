@@ -1,6 +1,12 @@
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JOptionPane;
@@ -10,6 +16,8 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -110,6 +118,59 @@ public class ReadWriteExcelFile {
 	}
 	
 	
+	public boolean writeFile (String filePath) throws NumberFormatException, IOException {
+		
+		String extension = null;
+		extension = FilenameUtils.getExtension(filePath);
+		
+		if (extension.equals(null)) {
+			filePath = filePath + ".xlsx";
+		}
+		else if (extension.equals("xlsx")) {
+			
+		}
+		else {
+			return false;
+		}
+		
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFSheet sheet = workbook.createSheet("Student Grade");
+		ArrayList<Long> idTable = new ArrayList<Long>();
+		ArrayList<String> gradeTable = new ArrayList<String>();
+		
+		if (new File("cs284_result").isFile()) {
+			File file = new File("cs284_result");
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			String line;
+			while ((line = br.readLine()) != null) {
+				String[] split = line.split("\t");
+				idTable.add(Long.parseLong(split[0]));
+				gradeTable.add(split[1]);
+			}
+			
+			int countRow = 0;
+			for (int i=0;i<idTable.size();i++) {
+				Row row = sheet.createRow(countRow++);
+				int countCol = 0;
+				for (int j=1; j<3; j++) {
+					Cell cell = row.createCell(countCol++);
+					switch (countCol) {
+					case 1: cell.setCellValue(idTable.get(i)); break;
+					case 2: cell.setCellValue(gradeTable.get(i)); break;
+					}
+				}
+			}
+			
+			FileOutputStream fos = new FileOutputStream(filePath);
+			workbook.write(fos);
+			workbook.close();
+			
+			return true;
+		}
+
+		return false;
+		
+	}
 
 	public boolean UpdateFileStatus() {
 		return list.isFilled();

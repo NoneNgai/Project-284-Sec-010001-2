@@ -38,6 +38,12 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.TableModel;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import javax.swing.Icon;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
@@ -1032,16 +1038,12 @@ public class MainPanel extends JPanel {
 			public void actionPerformed(ActionEvent arg0) {
 
 				JFileChooser filesave = new JFileChooser();
-				FileFilter filter = new FileNameExtensionFilter("Excel Workbook (*.xlsx)", "xlsx");
-				FileFilter filter2 = new FileNameExtensionFilter("Excel 97-2009 Workbook (*.xls)", "xls");
-				filesave.addChoosableFileFilter(filter);
-				filesave.addChoosableFileFilter(filter2);
 
 				int ret = filesave.showSaveDialog(null);
 
 				if (ret == JFileChooser.APPROVE_OPTION) {
 					
-					File file = filesave.getSelectedFile();
+					/*File file = filesave.getSelectedFile();
 					FileWriter w = null;
 					try {
 						w = new FileWriter(file+".txt");
@@ -1068,10 +1070,23 @@ public class MainPanel extends JPanel {
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
+					}*/
+					
+					
+					
+					try {
+						if (r.writeFile(filesave.getSelectedFile().toString())) {
+							lblUpdateStatus.setForeground(MyColor.GREEN.getColor());
+							lblUpdateStatus.setText("DONE");
+						}
+						else {
+							lblUpdateStatus.setForeground(MyColor.CORAL.getColor());
+							lblUpdateStatus.setText("Not Success");
+						}
+					} catch (NumberFormatException | IOException e) {
+						e.printStackTrace();
 					}
 					
-					lblUpdateStatus.setForeground(MyColor.GREEN.getColor());
-					lblUpdateStatus.setText("DONE");
 			} else {
 					fileTextField.setText("");
 
