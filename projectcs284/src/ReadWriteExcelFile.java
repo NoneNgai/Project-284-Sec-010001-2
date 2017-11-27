@@ -105,8 +105,11 @@ public class ReadWriteExcelFile {
 			wb.close();
 		}
 		extension = null;
-		ExcelFileToRead.close();;
+		ExcelFileToRead.close();
+		
 	}
+	
+	
 
 	public boolean UpdateFileStatus() {
 		return list.isFilled();
