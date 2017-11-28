@@ -146,7 +146,8 @@ public class ExamCriteria {
 		file = new File("cs284_Criteria");
 		FileReader f = new  FileReader(file);
 		BufferedReader read = new BufferedReader(f);
-		
+		if(file.exists())
+		{
 		read.readLine();
 		
 		int sizeType = Integer.parseInt(read.readLine());
@@ -178,11 +179,13 @@ public class ExamCriteria {
 		read.close();
 		f.close();
 		}
+		}
 		catch(FileNotFoundException f) 
 		{
 			System.out.println();
 			
 		}
+		
 		return type;
 		
 	

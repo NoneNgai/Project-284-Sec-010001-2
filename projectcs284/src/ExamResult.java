@@ -106,7 +106,7 @@ public class ExamResult {
 
 		}
 
-		for (int i = 0; i < all.size(); i++) {
+		for (int i = 0; i < all.size()-1; i++) {
 			if (all.get(i) >= ec.getA()) {
 				result.add(name.get(i) + "\tA");
 			} else if (all.get(i) < ec.getA() && all.get(i) >= ec.getbPlus()) {

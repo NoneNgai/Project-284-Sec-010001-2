@@ -257,7 +257,9 @@ public class MainPanel extends JPanel {
 			public void mouseExited(MouseEvent event) {
 				btnFillScore.setContentAreaFilled(false);
 			}
+
 			public void mouseClicked(MouseEvent event) {
+				comboBox.removeAllItems();
 				ArrayList<String> s = null;
 				try {
 					s = ec.loadList();
@@ -288,7 +290,6 @@ public class MainPanel extends JPanel {
 				btnHistory.setContentAreaFilled(false);
 			}
 		});
-
 
 		JButton btnExport = new JButton("  Export File", new ImageIcon("resource//image//export.png"));
 		btnExport.setForeground(new Color(219, 227, 229));
@@ -445,7 +446,7 @@ public class MainPanel extends JPanel {
 		btnOK.setFocusable(false);
 		btnOK.setBorderPainted(false);
 		btnOK.setBackground(new Color(22, 56, 81));
-		btnOK.setBounds(353, 286, 97, 41);
+		btnOK.setBounds(490, 286, 97, 41);
 		btnOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -474,29 +475,6 @@ public class MainPanel extends JPanel {
 			}
 		});
 		panelImport.add(btnOK);
-
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setForeground(new Color(219, 227, 229));
-		btnCancel.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));
-		btnCancel.setFocusable(false);
-		btnCancel.setBorderPainted(false);
-		btnCancel.setBackground(new Color(22, 56, 81));
-		btnCancel.setBounds(460, 286, 130, 41);
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				fileTextField.setText("");
-			}
-		});
-		btnCancel.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent event) {
-				highlightButtons(event.getLocationOnScreen(), btnCancel);
-			}
-
-			public void mouseExited(MouseEvent event) {
-				btnCancel.setBackground(MyColor.MIDNIGHTBLUE.getColor());
-			}
-		});
-		panelImport.add(btnCancel);
 
 		JLabel lblStatus = new JLabel("File Status : ");
 		lblStatus.setForeground(MyColor.MIDNIGHTBLUE.getColor());
@@ -528,23 +506,6 @@ public class MainPanel extends JPanel {
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setForeground(new Color(219, 227, 229));
-		btnCancel.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));
-		btnCancel.setFocusable(false);
-		btnCancel.setBorderPainted(false);
-		btnCancel.setBackground(new Color(22, 56, 81));
-		btnCancel.setBounds(588, 526, 140, 40);
-		btnCancel.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent event) {
-				highlightButtons(event.getLocationOnScreen(), btnCancel);
-			}
-
-			public void mouseExited(MouseEvent event) {
-				btnCancel.setBackground(MyColor.MIDNIGHTBLUE.getColor());
-			}
-		});
-		panelFillScore.add(btnCancel);
 
 		JButton btnOK = new JButton("OK");
 		btnOK.setForeground(new Color(219, 227, 229));
@@ -552,7 +513,7 @@ public class MainPanel extends JPanel {
 		btnOK.setFocusable(false);
 		btnOK.setBorderPainted(false);
 		btnOK.setBackground(new Color(22, 56, 81));
-		btnOK.setBounds(473, 526, 105, 40);
+		btnOK.setBounds(333, 526, 105, 40);
 		btnOK.addMouseListener(new MouseListener() {
 
 			@Override
@@ -586,9 +547,14 @@ public class MainPanel extends JPanel {
 				exam.clear();
 				std.clearList();
 				for (int i = 0; i < table.getRowCount(); i++) {
-					exam.add("" + table.getValueAt(i, 2));
-					std.addID(Long.valueOf((String) table.getValueAt(i, 0)));
+					try {
+						int a = Integer.parseInt(table.getValueAt(i, 2) + "");
+						exam.add("" + table.getValueAt(i, 2));
+						std.addID(Long.parseLong((String) table.getValueAt(i, 0)));
 
+					} catch (NumberFormatException n) {
+						JOptionPane.showMessageDialog(null, "Please Enter Only Integer");
+					}
 				}
 
 				try {
@@ -605,62 +571,17 @@ public class MainPanel extends JPanel {
 
 			}
 		});
+		panelFillScore.add(btnOK);
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		panelFillScore.add(btnOK);
-
-		/*IDtextField = new JTextField();
-		IDtextField.setHorizontalAlignment(SwingConstants.CENTER);
-		IDtextField.setForeground(new Color(219, 227, 229));
-		IDtextField.setText("Search by ID");
-		IDtextField.setFont(new Font("Segoe UI Semibold", Font.BOLD, 14));
-		IDtextField.setColumns(10);
-		IDtextField.addFocusListener(new FocusListener() {
-			public void focusGained(FocusEvent e) {
-				IDtextField.setBackground(MyColor.CORAL.getColor());
-				IDtextField.setForeground(MyColor.MIDNIGHTBLUE.getColor());
-				if (IDtextField.getText().equals("Search by ID")) {
-					IDtextField.setText("");
-				}
-			}
-
-			public void focusLost(FocusEvent e) {
-				IDtextField.setBackground(MyColor.MIDNIGHTBLUE.getColor());
-				IDtextField.setForeground(MyColor.GRAY.getColor());
-				if (IDtextField.getText().trim().isEmpty()) {
-					IDtextField.setText("Search by ID");
-				}
-
-			}
-		});
-		IDtextField.setBorder(BorderFactory.createEmptyBorder());
-		IDtextField.setBackground(new Color(25, 56, 81));
-		IDtextField.setBounds(277, 135, 156, 35);
-		panelFillScore.add(IDtextField);
-
-		JButton btnID = new JButton(new ImageIcon("resource//image//search.png"));
-		btnID.setFocusable(false);
-		btnID.setBorderPainted(false);
-		btnID.setBackground(new Color(25, 56, 81));
-		btnID.setBounds(433, 135, 47, 35);
-		btnID.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent event) {
-				highlightButtons(event.getLocationOnScreen(), btnID);
-			}
-
-			public void mouseExited(MouseEvent event) {
-				btnID.setBackground(MyColor.MIDNIGHTBLUE.getColor());
-			}
-		});
-		panelFillScore.add(btnID);*/
+		
 
 		//////////////////////////////////////////////// COMBOBOX LISTENER
 		//////////////////////////////////////////////// /////////////////////////////////////////////////////
 
-		
 		comboBox = new JComboBox();
 		comboBox.addItem("");
-		
+
 		comboBox.setFont(new Font("Segoe UI Semibold", Font.BOLD, 15));
 		comboBox.setBounds(266, 82, 222, 30);
 		panelFillScore.add(comboBox);
@@ -673,9 +594,9 @@ public class MainPanel extends JPanel {
 				panelFillScore.add(lblSubjectTitle);
 				panelFillScore.add(comboBox);
 				panelFillScore.add(btnOK);
-				//panelFillScore.add(btnID);
-				panelFillScore.add(btnCancel);
-				//panelFillScore.add(IDtextField);
+				// panelFillScore.add(btnID);
+				
+				// panelFillScore.add(IDtextField);
 
 				String head[] = { "Student ID", "Name", "Score" };
 
@@ -686,8 +607,6 @@ public class MainPanel extends JPanel {
 				scrollPane.setBounds(175, 192, 406, 310);
 				scrollPane.setBorder(BorderFactory.createLineBorder(MyColor.MIDNIGHTBLUE.getColor(), 2));
 				panelFillScore.add(scrollPane);
-
-				
 
 			}
 		});
@@ -787,16 +706,15 @@ public class MainPanel extends JPanel {
 
 			///////////////////////////////////////// FILL CRITERIA ACTIONLISTENER
 			///////////////////////////////////////// ////////////////////////////////
-			
+
 			public void mouseClicked(MouseEvent e) {
-				int a = 0, b = 0,sum=0,o =0;
-				
+				int a = 0, b = 0, sum = 0, o = 0;
+
 				ec.clearList();
 				try {
-					for(int i =0;i< tableFillscore.getRowCount();i++)
-					{
+					for (int i = 0; i < tableFillscore.getRowCount(); i++) {
 						sum += Integer.valueOf((String) tableFillscore.getValueAt(i, 2));
-						
+
 					}
 					if ((Integer.valueOf((String) tableFillscore.getValueAt(tableFillscore.getRowCount() - 1, 2))
 							+ Integer.valueOf(
@@ -804,19 +722,23 @@ public class MainPanel extends JPanel {
 						o = 1;
 						throw new CriteriaException();
 					}
-					if(sum!=100)
-					{
-						o=2;
+					if (sum != 100) {
+						o = 2;
 						throw new CriteriaException();
-					}
-					else {
+					} else {
 						for (int i = 0; i < tableFillscore.getRowCount(); i++) {
 							try {
 
 								a = Integer.valueOf((String) tableFillscore.getValueAt(i, 1));
 								b = Integer.valueOf((String) tableFillscore.getValueAt(i, 2));
+								if (tableFillscore.getValueAt(i, 0).equals(null)) {
 
-								ec.add("" + tableFillscore.getValueAt(i, 0), a, b);
+									throw new NullPointerException();
+
+								} else {
+									ec.add("" + tableFillscore.getValueAt(i, 0), a, b);
+
+								}
 
 							} catch (NumberFormatException n) {
 								System.out.println("Please Enter Number Not String ");
@@ -825,13 +747,18 @@ public class MainPanel extends JPanel {
 						}
 					}
 				} catch (CriteriaException c) {
-					if(o==1)
-					JOptionPane.showMessageDialog(null, c.getMessage());
-					if(o==2)
-					{
+					if (o == 1)
+						JOptionPane.showMessageDialog(null, c.getMessage());
+					if (o == 2) {
 						JOptionPane.showMessageDialog(null, "Sum of Percent should equals 100");
-						
+
 					}
+
+				} catch (NumberFormatException n) {
+					JOptionPane.showMessageDialog(null, "Please Enter Integer");
+				} catch (NullPointerException nu) {
+					JOptionPane.showMessageDialog(null, "Please Enter Type");
+
 				}
 
 				try {
@@ -967,7 +894,7 @@ public class MainPanel extends JPanel {
 					System.out.println(ec.getC());
 					System.out.println(ec.getD());
 				} catch (NumberFormatException n) {
-					System.out.println("Please Enter number in FillGrade");
+					JOptionPane.showMessageDialog(null, "Please Enter number in FillGrade");
 				}
 
 			}
@@ -1028,13 +955,14 @@ public class MainPanel extends JPanel {
 
 		JButton btnAddfile = new JButton("Save as");
 		btnAddfile.setBounds(545, 212, 100, 41);
-		btnAddfile.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 16) );		
+		btnAddfile.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 16));
 		btnAddfile.setForeground(new Color(219, 227, 229));
 		btnAddfile.setBackground(MyColor.MIDNIGHTBLUE.getColor());
 		btnAddfile.setBorderPainted(false);
 		btnAddfile.setFocusable(false);
 		btnAddfile.addActionListener(new ActionListener() {
-/////////////////////////// EXPORT FILE //////////////////////////////////////////////////////////////////////////
+			/////////////////////////// EXPORT FILE
+			/////////////////////////// //////////////////////////////////////////////////////////////////////////
 			public void actionPerformed(ActionEvent arg0) {
 
 				JFileChooser filesave = new JFileChooser();
@@ -1042,59 +970,53 @@ public class MainPanel extends JPanel {
 				int ret = filesave.showSaveDialog(null);
 
 				if (ret == JFileChooser.APPROVE_OPTION) {
-					
-					/*File file = filesave.getSelectedFile();
+
+					File file = filesave.getSelectedFile();
 					FileWriter w = null;
 					try {
-						w = new FileWriter(file+".txt");
+						w = new FileWriter(file + ".txt");
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					PrintWriter writer = new PrintWriter(w);
 					try {
 						exam.calculate();
 					} catch (NumberFormatException | IOException e) {
-					
+
 						e.printStackTrace();
 					}
-					
-					for(int i=0;i<exam.getFinalResult().size()-1;i++)
-					{
-						writer.write(exam.getFinalResult().get(i)+"\n");
+
+					for (int i = 0; i < exam.getFinalResult().size() - 1; i++) {
+						writer.write(exam.getFinalResult().get(i) + "\n");
 					}
-					
+
 					writer.close();
 					try {
 						w.close();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}*/
-					
-					
-					
+					}
+
 					try {
 						if (r.writeFile(filesave.getSelectedFile().toString())) {
 							lblUpdateStatus.setForeground(MyColor.GREEN.getColor());
 							lblUpdateStatus.setText("DONE");
-						}
-						else {
+						} else {
 							lblUpdateStatus.setForeground(MyColor.CORAL.getColor());
 							lblUpdateStatus.setText("Not Success");
 						}
 					} catch (NumberFormatException | IOException e) {
 						e.printStackTrace();
 					}
-					
-			} else {
+
+				} else {
 					fileTextField.setText("");
 
 				}
 
 			}
 		});
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		btnAddfile.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent event) {
 				highlightButtons(event.getLocationOnScreen(), btnAddfile);
@@ -1106,61 +1028,40 @@ public class MainPanel extends JPanel {
 		});
 		panelExport.add(btnAddfile);
 
-		/*JButton btnOK = new JButton((Icon) null);
-		btnOK.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));
-		btnOK.setForeground(MyColor.GRAY.getColor());
-		btnOK.setText("OK");
-		btnOK.setFocusable(false);
-		btnOK.setBorderPainted(false);
-		btnOK.setBackground(new Color(22, 56, 81));
-		btnOK.setBounds(353, 286, 97, 41);
-		btnOK.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					if (!fileTextField.getText().trim().isEmpty()) {
-
-					} else {
-						lblUpdateStatus.setForeground(MyColor.RED.getColor());
-						lblUpdateStatus.setText("Please select file first");
-					}
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		btnOK.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent event) {
-				highlightButtons(event.getLocationOnScreen(), btnOK);
-			}
-
-			public void mouseExited(MouseEvent event) {
-				btnOK.setBackground(MyColor.MIDNIGHTBLUE.getColor());
-			}
-		});
-		panelExport.add(btnOK);
-
-		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setForeground(new Color(219, 227, 229));
-		btnCancel.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));
-		btnCancel.setFocusable(false);
-		btnCancel.setBorderPainted(false);
-		btnCancel.setBackground(new Color(22, 56, 81));
-		btnCancel.setBounds(460, 286, 130, 41);
-		btnCancel.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				fileTextField.setText("");
-			}
-		});
-		btnCancel.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent event) {
-				highlightButtons(event.getLocationOnScreen(), btnCancel);
-			}
-
-			public void mouseExited(MouseEvent event) {
-				btnCancel.setBackground(MyColor.MIDNIGHTBLUE.getColor());
-			}
-		});
-		panelExport.add(btnCancel);*/
+		/*
+		 * JButton btnOK = new JButton((Icon) null); btnOK.setFont(new
+		 * Font("Segoe UI Semibold", Font.BOLD, 18));
+		 * btnOK.setForeground(MyColor.GRAY.getColor()); btnOK.setText("OK");
+		 * btnOK.setFocusable(false); btnOK.setBorderPainted(false);
+		 * btnOK.setBackground(new Color(22, 56, 81)); btnOK.setBounds(353, 286, 97,
+		 * 41); btnOK.addActionListener(new ActionListener() { public void
+		 * actionPerformed(ActionEvent e) { try { if
+		 * (!fileTextField.getText().trim().isEmpty()) {
+		 * 
+		 * } else { lblUpdateStatus.setForeground(MyColor.RED.getColor());
+		 * lblUpdateStatus.setText("Please select file first"); } } catch (Exception e1)
+		 * { e1.printStackTrace(); } } }); btnOK.addMouseListener(new MouseAdapter() {
+		 * public void mouseEntered(MouseEvent event) {
+		 * highlightButtons(event.getLocationOnScreen(), btnOK); }
+		 * 
+		 * public void mouseExited(MouseEvent event) {
+		 * btnOK.setBackground(MyColor.MIDNIGHTBLUE.getColor()); } });
+		 * panelExport.add(btnOK);
+		 * 
+		 * JButton btnCancel = new JButton("Cancel"); btnCancel.setForeground(new
+		 * Color(219, 227, 229)); btnCancel.setFont(new Font("Segoe UI Semibold",
+		 * Font.BOLD, 18)); btnCancel.setFocusable(false);
+		 * btnCancel.setBorderPainted(false); btnCancel.setBackground(new Color(22, 56,
+		 * 81)); btnCancel.setBounds(460, 286, 130, 41); btnCancel.addActionListener(new
+		 * ActionListener() { public void actionPerformed(ActionEvent e) {
+		 * fileTextField.setText(""); } }); btnCancel.addMouseListener(new
+		 * MouseAdapter() { public void mouseEntered(MouseEvent event) {
+		 * highlightButtons(event.getLocationOnScreen(), btnCancel); }
+		 * 
+		 * public void mouseExited(MouseEvent event) {
+		 * btnCancel.setBackground(MyColor.MIDNIGHTBLUE.getColor()); } });
+		 * panelExport.add(btnCancel);
+		 */
 
 		JLabel lblStatus = new JLabel("File Status : ");
 		lblStatus.setForeground(MyColor.MIDNIGHTBLUE.getColor());
