@@ -123,13 +123,15 @@ public class ReadWriteExcelFile {
 		String extension = null;
 		extension = FilenameUtils.getExtension(filePath);
 		
-		if (extension.equals(null)) {
+		if (extension.equals("")) {
 			filePath = filePath + ".xlsx";
 		}
 		else if (extension.equals("xlsx")) {
 			
 		}
 		else {
+			System.out.println("else condition");
+			System.out.println(extension);
 			return false;
 		}
 		
@@ -168,6 +170,7 @@ public class ReadWriteExcelFile {
 			return true;
 		}
 
+		System.out.println("file not found");
 		return false;
 		
 	}
