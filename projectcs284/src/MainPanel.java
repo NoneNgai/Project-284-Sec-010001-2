@@ -506,7 +506,6 @@ public class MainPanel extends JPanel {
 
 		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
 		JButton btnOK = new JButton("OK");
 		btnOK.setForeground(new Color(219, 227, 229));
 		btnOK.setFont(new Font("Segoe UI Semibold", Font.BOLD, 18));
@@ -546,9 +545,12 @@ public class MainPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				exam.clear();
 				std.clearList();
+				int index = 0;
 				for (int i = 0; i < table.getRowCount(); i++) {
 					try {
+
 						int a = Integer.parseInt(table.getValueAt(i, 2) + "");
+
 						exam.add("" + table.getValueAt(i, 2));
 						std.addID(Long.parseLong((String) table.getValueAt(i, 0)));
 
@@ -558,11 +560,6 @@ public class MainPanel extends JPanel {
 				}
 
 				try {
-
-					System.out.println(ec.getA());
-					System.out.println(ec.getB());
-					System.out.println(ec.getC());
-					System.out.println(ec.getD());
 					exam.saveList(std.getIDList(), exam.getScoreList(), comboBox.getSelectedItem() + "");
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -573,8 +570,6 @@ public class MainPanel extends JPanel {
 		});
 		panelFillScore.add(btnOK);
 		///////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-		
 
 		//////////////////////////////////////////////// COMBOBOX LISTENER
 		//////////////////////////////////////////////// /////////////////////////////////////////////////////
@@ -595,7 +590,7 @@ public class MainPanel extends JPanel {
 				panelFillScore.add(comboBox);
 				panelFillScore.add(btnOK);
 				// panelFillScore.add(btnID);
-				
+
 				// panelFillScore.add(IDtextField);
 
 				String head[] = { "Student ID", "Name", "Score" };
@@ -877,24 +872,56 @@ public class MainPanel extends JPanel {
 			}
 
 			public void mouseClicked(MouseEvent e) {
-
-				manyquiz = textFieldManyQuiz.getText();
-				ec.setSize(Integer.valueOf(textFieldManyQuiz.getText()));
+				int t = 0;
 				try {
-					ec.setA(Integer.parseInt(AField.getText()));
-					ec.setB(Integer.parseInt(BField.getText()));
-					ec.setC(Integer.parseInt(CField.getText()));
-					ec.setD(Integer.parseInt(DField.getText()));
-					ec.setbPlus(Integer.parseInt(BpField.getText()));
-					ec.setcPlus(Integer.parseInt(CpField.getText()));
-					ec.setdPlus(Integer.parseInt(DpField.getText()));
+					manyquiz = textFieldManyQuiz.getText();
+					int manyQuiz = Integer.parseInt(textFieldManyQuiz.getText());
+					if (manyQuiz < 0) {
+						t = 1;
+						throw new CriteriaException();
 
-					System.out.println(ec.getA());
-					System.out.println(ec.getB());
-					System.out.println(ec.getC());
-					System.out.println(ec.getD());
+					}
+					if (manyQuiz == 1) {
+						t = 2;
+						throw new CriteriaException();
+
+					}
+					ec.setSize(manyQuiz);
+				} catch (NumberFormatException n) {
+					JOptionPane.showMessageDialog(null, "Please enter amount of quiz");
+				} catch (CriteriaException c) {
+					if (t == 1)
+						JOptionPane.showMessageDialog(null, "Amount of Quiz must be Positive");
+					if (t == 2)
+						JOptionPane.showMessageDialog(null, "Amount of Quiz must be more than 1");
+				}
+
+				try {
+
+					int a = Integer.parseInt(AField.getText());
+					int bp = Integer.parseInt(BpField.getText());
+					int b = Integer.parseInt(BField.getText());
+					int cp = Integer.parseInt(CpField.getText());
+					int c = Integer.parseInt(CField.getText());
+					int dp = Integer.parseInt(DpField.getText());
+					int d = Integer.parseInt(DField.getText());
+
+					if (a < 0 || bp < 0 || b < 0 || cp < 0 || c < 0 || dp < 0 || d < 0) {
+						throw new CriteriaException();
+					} else {
+						ec.setA(a);
+						ec.setB(b);
+						ec.setC(c);
+						ec.setD(d);
+						ec.setbPlus(bp);
+						ec.setcPlus(cp);
+						ec.setdPlus(dp);
+					}
 				} catch (NumberFormatException n) {
 					JOptionPane.showMessageDialog(null, "Please Enter number in FillGrade");
+				} catch (CriteriaException c) {
+					JOptionPane.showMessageDialog(null, "Grade must be Positive");
+
 				}
 
 			}
@@ -1001,6 +1028,8 @@ public class MainPanel extends JPanel {
 						if (r.writeFile(filesave.getSelectedFile().toString())) {
 							lblUpdateStatus.setForeground(MyColor.GREEN.getColor());
 							lblUpdateStatus.setText("DONE");
+
+							fileTextField.setText(filesave.getSelectedFile() + "");
 						} else {
 							lblUpdateStatus.setForeground(MyColor.CORAL.getColor());
 							lblUpdateStatus.setText("Not Success");
@@ -1027,41 +1056,6 @@ public class MainPanel extends JPanel {
 			}
 		});
 		panelExport.add(btnAddfile);
-
-		/*
-		 * JButton btnOK = new JButton((Icon) null); btnOK.setFont(new
-		 * Font("Segoe UI Semibold", Font.BOLD, 18));
-		 * btnOK.setForeground(MyColor.GRAY.getColor()); btnOK.setText("OK");
-		 * btnOK.setFocusable(false); btnOK.setBorderPainted(false);
-		 * btnOK.setBackground(new Color(22, 56, 81)); btnOK.setBounds(353, 286, 97,
-		 * 41); btnOK.addActionListener(new ActionListener() { public void
-		 * actionPerformed(ActionEvent e) { try { if
-		 * (!fileTextField.getText().trim().isEmpty()) {
-		 * 
-		 * } else { lblUpdateStatus.setForeground(MyColor.RED.getColor());
-		 * lblUpdateStatus.setText("Please select file first"); } } catch (Exception e1)
-		 * { e1.printStackTrace(); } } }); btnOK.addMouseListener(new MouseAdapter() {
-		 * public void mouseEntered(MouseEvent event) {
-		 * highlightButtons(event.getLocationOnScreen(), btnOK); }
-		 * 
-		 * public void mouseExited(MouseEvent event) {
-		 * btnOK.setBackground(MyColor.MIDNIGHTBLUE.getColor()); } });
-		 * panelExport.add(btnOK);
-		 * 
-		 * JButton btnCancel = new JButton("Cancel"); btnCancel.setForeground(new
-		 * Color(219, 227, 229)); btnCancel.setFont(new Font("Segoe UI Semibold",
-		 * Font.BOLD, 18)); btnCancel.setFocusable(false);
-		 * btnCancel.setBorderPainted(false); btnCancel.setBackground(new Color(22, 56,
-		 * 81)); btnCancel.setBounds(460, 286, 130, 41); btnCancel.addActionListener(new
-		 * ActionListener() { public void actionPerformed(ActionEvent e) {
-		 * fileTextField.setText(""); } }); btnCancel.addMouseListener(new
-		 * MouseAdapter() { public void mouseEntered(MouseEvent event) {
-		 * highlightButtons(event.getLocationOnScreen(), btnCancel); }
-		 * 
-		 * public void mouseExited(MouseEvent event) {
-		 * btnCancel.setBackground(MyColor.MIDNIGHTBLUE.getColor()); } });
-		 * panelExport.add(btnCancel);
-		 */
 
 		JLabel lblStatus = new JLabel("File Status : ");
 		lblStatus.setForeground(MyColor.MIDNIGHTBLUE.getColor());

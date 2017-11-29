@@ -92,7 +92,7 @@ public class ExamResult {
 
 		for (int i = 0; i < score.size(); i++) {
 			for (int j = 0; j < score.get(i).size(); j++) {
-				allScore.get(i).add(score.get(i).get(j) * ec.getPercent(i) / 100.00);
+				allScore.get(i).add(score.get(i).get(j) * (ec.getPercent(i) / 100.00));
 
 			}
 		}
@@ -136,6 +136,16 @@ public class ExamResult {
 		}
 		write.close();
 		wr.close();
+		
+		FileWriter writes  = new FileWriter(new File("cs284_resultScore"));
+		BufferedWriter writer = new BufferedWriter(writes);
+		for (int i = 0; i <all.size()-1; i++) {
+			writer.write(name.get(i)+"\t"+all.get(i));
+			writer.newLine();
+		}
+		writer.close();
+		writes.close();
+		
 		
 
 	}

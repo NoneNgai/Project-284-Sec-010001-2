@@ -11,9 +11,8 @@ public class ExamCriteria {
 	private ArrayList<String> type;
 	private ArrayList<Integer> max;
 	private ArrayList<Integer> percent;
-	private int size,a,b,c,d,bPlus,cPlus,dPlus;
+	private int size, a, b, c, d, bPlus, cPlus, dPlus;
 
-	
 	public int getA() {
 		return a;
 	}
@@ -45,6 +44,7 @@ public class ExamCriteria {
 	public void setD(int d) {
 		this.d = d;
 	}
+
 	public int getcPlus() {
 		return cPlus;
 	}
@@ -60,9 +60,11 @@ public class ExamCriteria {
 	public void setdPlus(int dPlus) {
 		this.dPlus = dPlus;
 	}
+
 	public int getbPlus() {
 		return bPlus;
 	}
+
 	public void setbPlus(int bPlus) {
 		this.bPlus = bPlus;
 	}
@@ -92,6 +94,7 @@ public class ExamCriteria {
 	public Integer getPercent(int index) {
 		return percent.get(index);
 	}
+
 	public ArrayList<String> getTypeList() {
 		return type;
 	}
@@ -103,6 +106,7 @@ public class ExamCriteria {
 	public ArrayList<Integer> getPercentList() {
 		return percent;
 	}
+
 	public int size() {
 		return size;
 	}
@@ -111,105 +115,96 @@ public class ExamCriteria {
 		this.size = size;
 	}
 
+	public void saveList(ArrayList<String> type, ArrayList<Integer> max, ArrayList<Integer> percent, String nameSubject,
+			String manyQuiz, int a, int b, int c, int d, int BPlus, int cPlus, int dPlus)
+			throws IOException, FileException {
 
-	public void saveList(ArrayList<String> type,ArrayList<Integer> max,ArrayList<Integer> percent,String nameSubject,String manyQuiz,int a,int b ,int c,int d,int BPlus,int cPlus,int dPlus) throws IOException,FileException {
-		
-		File file = new File ("cs284_Criteria");
+		File file = new File("cs284_Criteria");
 		FileWriter f = new FileWriter(file);
-		BufferedWriter write= new BufferedWriter(f);
-		
-		write.write(nameSubject+"\n");
-		write.write(manyQuiz+"\n");
-		for (int i=0;i<type.size();i++) 
-		{
-			write.write(type.get(i)+"\t"+max.get(i)+"\t"+percent.get(i)+"\n");
+		BufferedWriter write = new BufferedWriter(f);
+
+		write.write(nameSubject + "\n");
+		write.write(manyQuiz + "\n");
+		for (int i = 0; i < type.size(); i++) {
+			write.write(type.get(i) + "\t" + max.get(i) + "\t" + percent.get(i) + "\n");
 		}
-		write.write("A"+"\t"+a+"\n");
-		write.write("B"+"\t"+b+"\n");
-		write.write("B+"+"\t"+bPlus+"\n");
-		write.write("C"+"\t"+c+"\n");
-		write.write("C+"+"\t"+cPlus+"\n");
-		write.write("D"+"\t"+d+"\n");
-		write.write("D+"+"\t"+dPlus+"\n");
-		
-	
+		write.write("A" + "\t" + a + "\n");
+		write.write("B" + "\t" + b + "\n");
+		write.write("B+" + "\t" + bPlus + "\n");
+		write.write("C" + "\t" + c + "\n");
+		write.write("C+" + "\t" + cPlus + "\n");
+		write.write("D" + "\t" + d + "\n");
+		write.write("D+" + "\t" + dPlus + "\n");
+
 		write.close();
 		f.close();
 
 	}
-	
-	public ArrayList<String> loadList() throws NumberFormatException, IOException
-	{
+
+	public ArrayList<String> loadList() throws NumberFormatException, IOException {
 		clearList();
 		File file = null;
 		try {
-		file = new File("cs284_Criteria");
-		FileReader f = new  FileReader(file);
-		BufferedReader read = new BufferedReader(f);
-		if(file.exists())
-		{
-		read.readLine();
-		
-		int sizeType = Integer.parseInt(read.readLine());
-		
-		for(int i=0;i<sizeType;i++)
-		{
-			String[] spt = read.readLine().split("\t");
-			type.add(spt[0]);
-			max.add(Integer.parseInt(spt[1]));
-			percent.add(Integer.parseInt(spt[2]));
-		}
-		
-		
-		ArrayList<Integer> grade = new ArrayList<>();
-		for(int i=0;i<7;i++)
-		{
-			String[] spt = read.readLine().split("\t");
-			grade.add(Integer.valueOf(spt[1]));
-		}
-		
-		setA(grade.get(0));
-		setB(grade.get(1));
-		setbPlus(grade.get(2));
-		setC(grade.get(3));
-		setcPlus(grade.get(4));
-		setD(grade.get(5));
-		setdPlus(grade.get(6));
-		
-		read.close();
-		f.close();
-		}
-		}
-		catch(FileNotFoundException f) 
-		{
+			file = new File("cs284_Criteria");
+			FileReader f = new FileReader(file);
+			BufferedReader read = new BufferedReader(f);
+			if (file.exists()) {
+				read.readLine();
+
+				int sizeType = Integer.parseInt(read.readLine());
+
+				for (int i = 0; i < sizeType; i++) {
+					String[] spt = read.readLine().split("\t");
+					type.add(spt[0]);
+					max.add(Integer.parseInt(spt[1]));
+					percent.add(Integer.parseInt(spt[2]));
+				}
+
+				ArrayList<Integer> grade = new ArrayList<>();
+				for (int i = 0; i < 7; i++) {
+					String[] spt = read.readLine().split("\t");
+					grade.add(Integer.valueOf(spt[1]));
+				}
+
+				setA(grade.get(0));
+				setB(grade.get(1));
+				setbPlus(grade.get(2));
+				setC(grade.get(3));
+				setcPlus(grade.get(4));
+				setD(grade.get(5));
+				setdPlus(grade.get(6));
+
+				read.close();
+				f.close();
+			}
+		} catch (FileNotFoundException f) {
 			System.out.println();
-			
+
 		}
-		
+
 		return type;
-		
-	
-		
+
 	}
+
 	public void clearList() {
 		type.clear();
 		max.clear();
 		percent.clear();
-		
+
 	}
 
 	public String[][] getTable() {
 		String[][] table = new String[size][3];
-	
-		for (int i = 0; i < size-2; i++) {
+
+		for (int i = 0; i < size - 2; i++) {
 			for (int j = 0; j < 3; j++) {
-				
+
 				table[i][1] = null;
 				table[i][2] = null;
 			}
 		}
-		table[size-1][0] = "Final";
-		table[size-2][0] = "Midterm";
+		table[size - 1][0] = "Final";
+		table[size - 2][0] = "Midterm";
 
 		return table;
 
